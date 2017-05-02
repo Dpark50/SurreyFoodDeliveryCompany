@@ -10,8 +10,79 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="t27.surreyfooddeliverycompany.LoginActivity">
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo"
+        android:id="@+id/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <TextView
+        android:text="Surrey Food Delivery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/sfd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_below="@id/logo"
+        android:layout_marginTop="178dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/id"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/sfd"
+        android:layout_alignStart="@+id/password_input" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/id_input"
+        android:layout_below="@+id/id"
+        android:layout_alignStart="@+id/password" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/password"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/id_input"
+        android:layout_alignStart="@+id/password_input" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password_input"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/password_input"
+        android:layout_alignStart="@+id/password_input"
+        android:layout_alignEnd="@+id/password_input" />
+
+    <Button
+        android:text="Forgot Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgot_pass"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/login"
+        android:layout_alignStart="@+id/password_input"
+        android:layout_alignEnd="@+id/login" />
+
 </RelativeLayout>
