@@ -73,7 +73,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/password_input"
         android:layout_alignStart="@+id/password_input"
-        android:layout_alignEnd="@+id/password_input" />
+        android:layout_alignEnd="@+id/password_input"
+        android:onClick="login"/>
 
     <Button
         android:text="Forgot Password"

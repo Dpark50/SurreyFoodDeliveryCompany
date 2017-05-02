@@ -11,20 +11,29 @@
     tools:context="t27.surreyfooddeliverycompany.DriverActivity">
 
     <TextView
+        android:background="@drawable/back"
+        android:text="\n   An Order\n   Homer\n   1234 Simpson Drive\n   3x Pizza"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/cOrderLabel"
+        android:layout_marginTop="42dp"
+        android:id="@+id/currentOrderInformation" />
+
+    <Button
+        android:text="Profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp" />
+
+    <TextView
         android:text="Current Order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/cOrderLabel"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/cOrderLabel"
-        android:layout_marginTop="42dp"
-        android:id="@+id/textView2" />
 </RelativeLayout>
