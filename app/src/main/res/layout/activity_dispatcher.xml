@@ -10,10 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="t27.surreyfooddeliverycompany.DispatcherActivity">
 
+    <TextView
+        android:text="Order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textSize="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
     <TabHost
+        android:layout_below="@id/title"
         android:layout_width="200dip"
         android:layout_height="300dip"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true">
@@ -39,10 +50,12 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+                    <ListView
+                        android:id="@+id/pending_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Pending 2"/>
+                        android:layout_height="match_parent">
+
+                    </ListView>
 
                 </LinearLayout>
 
@@ -52,9 +65,17 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
 
+                    <ListView
+                        android:id="@+id/current_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </ListView>
+
                 </LinearLayout>
 
             </FrameLayout>
         </LinearLayout>
     </TabHost>
+
 </RelativeLayout>
