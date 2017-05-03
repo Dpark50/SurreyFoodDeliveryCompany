@@ -45,22 +45,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <!-- Current orders -->
                 <LinearLayout
                     android:id="@+id/current"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="1">
+                    android:orientation="vertical">
 
                     <ListView
                         android:id="@+id/current_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.12">
+                        android:layout_height="match_parent">
 
                     </ListView>
                 </LinearLayout>
 
+                <!-- In progress orders -->
                 <LinearLayout
                     android:id="@+id/pending"
                     android:layout_width="match_parent"
@@ -113,9 +113,9 @@
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
-            <!-- RelativeLayout as order button -->
+            <!-- Drivers button -->
             <RelativeLayout
-                android:id="@+id/driver_btn"
+                android:id="@+id/drivers_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1.0">
@@ -135,7 +135,7 @@
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
-            <!-- RelativeLayout as order button -->
+            <!-- Settings button -->
             <RelativeLayout
                 android:id="@+id/settings_btn"
                 android:layout_width="50dp"
@@ -157,7 +157,7 @@
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
-            <!-- RelativeLayout as order button -->
+            <!-- Profile button -->
             <RelativeLayout
                 android:id="@+id/profile_btn"
                 android:layout_width="50dp"
