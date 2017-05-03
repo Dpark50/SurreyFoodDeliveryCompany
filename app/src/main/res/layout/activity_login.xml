@@ -11,81 +11,84 @@
     tools:context="t27.surreyfooddeliverycompany.LoginActivity">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/logo"
-        android:id="@+id/logo"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/sfd_logo" />
 
     <TextView
-        android:text="Surrey Food Delivery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/sfd"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_below="@id/logo"
-        android:layout_marginTop="170dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
+        android:text="Surrey Food Delivery&#10;Company"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:text="ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/id"
-        android:paddingTop="10dp"
-        android:layout_below="@+id/sfd"
-        android:layout_alignStart="@+id/password_input" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
+        android:layout_alignStart="@+id/password_input"
+        android:layout_below="@+id/sfd"
+        android:paddingTop="10dp"
+        android:text="ID" />
+
+    <EditText
         android:id="@+id/id_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/password"
         android:layout_below="@+id/id"
-        android:layout_alignStart="@+id/password" />
+        android:background="@android:drawable/editbox_background"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <TextView
-        android:text="Password"
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/password"
-        android:paddingTop="10dp"
+        android:layout_alignStart="@+id/password_input"
         android:layout_below="@+id/id_input"
-        android:layout_alignStart="@+id/password_input" />
+        android:paddingTop="10dp"
+        android:text="Password" />
 
     <EditText
+        android:id="@+id/password_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/password_input"
         android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:drawable/editbox_background"
+        android:ems="10"
+        android:inputType="textPassword" />
 
     <Button
-        android:text="Login"
+        android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/login"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/password_input"
-        android:layout_alignStart="@+id/password_input"
         android:layout_alignEnd="@+id/password_input"
-        android:onClick="login"/>
+        android:layout_alignStart="@+id/password_input"
+        android:layout_below="@id/password_input"
+        android:layout_marginTop="10dp"
+        android:onClick="login"
+        android:text="Login" />
 
     <!-- Temporary for admin -->
     <Button
-        android:text="Forgot Password"
+        android:id="@+id/forgot_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/forgot_pass"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/login"
-        android:layout_alignStart="@+id/password_input"
         android:layout_alignEnd="@+id/login"
-        android:onClick="Admin" />
+        android:layout_alignStart="@+id/password_input"
+        android:layout_below="@id/login"
+        android:layout_marginTop="10dp"
+        android:onClick="Admin"
+        android:text="Forgot Password" />
 
 </RelativeLayout>
