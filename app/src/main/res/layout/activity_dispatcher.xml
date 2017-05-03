@@ -64,13 +64,13 @@
                 <LinearLayout
                     android:id="@+id/pending"
                     android:layout_width="match_parent"
-                    android:layout_height="382dp"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <ListView
                         android:id="@+id/pending_list"
                         android:layout_width="match_parent"
-                        android:layout_height="382dp">
+                        android:layout_height="match_parent">
 
                     </ListView>
                 </LinearLayout>
@@ -124,13 +124,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/drivers"
-                    android:src="@drawable/orderButton" />
+                    android:src="@drawable/driversButton" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_below="@id/drivers"
-                    android:text="Orders"
+                    android:text="Drivers"
                     android:gravity="center"
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
@@ -146,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/settings"
-                    android:src="@drawable/orderButton" />
+                    android:src="@drawable/settingsButton" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:id="@+id/profile"
-                    android:src="@drawable/orderButton" />
+                    android:src="@drawable/profileButton" />
 
                 <TextView
                     android:layout_width="match_parent"
