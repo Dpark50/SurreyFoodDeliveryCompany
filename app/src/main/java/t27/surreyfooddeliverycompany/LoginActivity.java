@@ -17,4 +17,9 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DriverActivity.class);
         startActivity(intent);
     }
+
+    public void Admin(View view) {
+        Intent intent = new Intent(this, DispatcherActivity.class);
+        startActivity(intent);
+    }
 }

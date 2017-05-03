@@ -16,9 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".DriverActivity" />
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".DispatcherActivity"></activity>
->>>>>>> ae12a8e0fb20dde351d4ee3cbdcdb869f1938a43
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".DispatcherActivity" />
+        >>>>>>> ae12a8e0fb20dde351d4ee3cbdcdb869f1938a43
+        <activity android:name=".DriversListActivity"></activity>
     </application>
 
 </manifest>

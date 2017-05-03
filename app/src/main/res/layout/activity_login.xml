@@ -76,6 +76,7 @@
         android:layout_alignEnd="@+id/password_input"
         android:onClick="login"/>
 
+    <!-- Temporary for admin -->
     <Button
         android:text="Forgot Password"
         android:layout_width="match_parent"
@@ -84,6 +85,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/login"
         android:layout_alignStart="@+id/password_input"
-        android:layout_alignEnd="@+id/login" />
+        android:layout_alignEnd="@+id/login"
+        android:onClick="Admin" />
 
 </RelativeLayout>
