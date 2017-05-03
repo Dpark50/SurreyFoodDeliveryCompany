@@ -12,10 +12,11 @@
 
     <TextView
         android:text="Drivers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
         android:textSize="20dp"
+        android:textStyle="bold"
         android:layout_marginBottom="10dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
