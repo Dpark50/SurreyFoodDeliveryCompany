@@ -49,7 +49,8 @@
                 android:id="@+id/orders_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_weight="1.0">
+                android:layout_weight="1.0"
+                android:onClick="Orders">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -71,8 +72,7 @@
                 android:id="@+id/drivers_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_weight="1.0"
-                android:onClick="DriversList">
+                android:layout_weight="1.0">
 
                 <ImageView
                     android:layout_width="match_parent"
