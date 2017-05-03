@@ -20,10 +20,12 @@ public class DispatcherActivity extends AppCompatActivity {
     }
 
     public void Settings(View view) {
-
+        intent = new Intent(this, DispatcherSettingsActivity.class);
+        startActivity(intent);
     }
 
     public void Profile(View view) {
-        
+        intent = new Intent(this, DispatcherProfileActivity.class);
+        startActivity(intent);
     }
 }
