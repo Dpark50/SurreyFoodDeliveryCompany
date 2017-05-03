@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class DispatcherActivity extends AppCompatActivity {
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,8 +14,16 @@ public class DispatcherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dispatcher);
     }
 
-    protected void DriversList(View view) {
-        Intent intent = new Intent(this, DriversListActivity.class);
+    public void DriversList(View view) {
+        intent = new Intent(this, DriversListActivity.class);
         startActivity(intent);
+    }
+
+    public void Settings(View view) {
+
+    }
+
+    public void Profile(View view) {
+        
     }
 }
