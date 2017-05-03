@@ -25,7 +25,7 @@ public class DispatcherActivity extends AppCompatActivity {
     }
 
     public void Profile(View view) {
-        intent = new Intent(this, DispatcherProfileActivity.class);
+        intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 }
