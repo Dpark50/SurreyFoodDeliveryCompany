@@ -16,16 +16,19 @@ public class DispatcherActivity extends AppCompatActivity {
 
     public void DriversList(View view) {
         intent = new Intent(this, DriversListActivity.class);
+        finish();
         startActivity(intent);
     }
 
     public void Settings(View view) {
         intent = new Intent(this, DispatcherSettingsActivity.class);
+        finish();
         startActivity(intent);
     }
 
     public void Profile(View view) {
-        intent = new Intent(this, DispatcherProfileActivity.class);
+        intent = new Intent(this, ProfileActivity.class);
+        finish();
         startActivity(intent);
     }
 }
