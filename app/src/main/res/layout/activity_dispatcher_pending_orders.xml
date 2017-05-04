@@ -42,7 +42,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="NewOrders">
+                android:onClick="newOrders">
 
                 <ImageView
                     android:id="@+id/new_orders_icon"
@@ -60,7 +60,7 @@
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
-            <!-- RelativeLayout as order button -->
+            <!-- pending order button -->
             <RelativeLayout
                 android:id="@+id/pending_orders_btn"
                 android:layout_width="50dp"
@@ -89,7 +89,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="DriversList">
+                android:onClick="driversList">
 
                 <ImageView
                     android:id="@+id/drivers"
@@ -115,7 +115,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="Profile">
+                android:onClick="profile">
 
                 <ImageView
                     android:id="@+id/profile"

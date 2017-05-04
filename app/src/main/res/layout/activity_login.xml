@@ -47,7 +47,8 @@
         android:layout_below="@+id/id"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:text="dispatcher" />
 
     <TextView
         android:id="@+id/password"
@@ -88,7 +89,6 @@
         android:layout_alignStart="@+id/password_input"
         android:layout_below="@id/login"
         android:layout_marginTop="10dp"
-        android:onClick="Admin"
         android:text="Forgot Password" />
 
 </RelativeLayout>

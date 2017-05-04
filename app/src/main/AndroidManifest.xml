@@ -15,12 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DriverActivity" />
+        <activity android:name=".DriverHomeActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".DispatcherNewOrdersActivity" />
         <activity android:name=".DispatcherDriversListActivity" />
         <activity android:name=".DispatcherPendingOrdersActivity" />
-        <activity android:name=".AdminHomeActivity"></activity>
+        <activity android:name=".AdminHomeActivity" />
+        <activity android:name=".AdminAddAccountActivity"></activity>
     </application>
 
 </manifest>

@@ -14,19 +14,19 @@ public class DispatcherDriversListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dispatcher_drivers_list);
     }
 
-    public void NewOrders(View view) {
+    public void newOrders(View view) {
         intent = new Intent(this, DispatcherNewOrdersActivity.class);
         finish();
         startActivity(intent);
     }
 
-    public void PendingOrders(View view) {
+    public void pendingOrders(View view) {
         intent = new Intent(this, DispatcherPendingOrdersActivity.class);
         finish();
         startActivity(intent);
     }
 
-    public void Profile(View view) {
+    public void profile(View view) {
         intent = new Intent(this, ProfileActivity.class);
         finish();
         startActivity(intent);

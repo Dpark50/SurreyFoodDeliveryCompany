@@ -64,7 +64,7 @@
 
                 </LinearLayout>
 
-                <!-- Drivers -->
+                <!-- Drivers list -->
                 <LinearLayout
                     android:id="@+id/drivers_btn"
                     android:layout_width="match_parent"

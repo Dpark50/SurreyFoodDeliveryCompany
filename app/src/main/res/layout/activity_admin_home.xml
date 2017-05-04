@@ -25,7 +25,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:text="Add Account" />
+            android:text="Add Account"
+            android:onClick="addAccount"/>
 
     </LinearLayout>
 
@@ -57,5 +58,23 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <!-- Body -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/back">
+
+        <TextView
+            android:id="@+id/currentOrderInformation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Account list here" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
