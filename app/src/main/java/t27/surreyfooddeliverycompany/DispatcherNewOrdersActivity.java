@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TabHost;
 
 public class DispatcherNewOrdersActivity extends AppCompatActivity {
@@ -37,5 +38,11 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         tabHost.addTab(tab2);
         tabHost.addTab(tab3);
         tabHost.addTab(tab4);
+    }
+
+    public void SignOut(View view) {
+        intent = new Intent(this, LoginActivity.class);
+        finish();
+        startActivity(intent);
     }
 }
