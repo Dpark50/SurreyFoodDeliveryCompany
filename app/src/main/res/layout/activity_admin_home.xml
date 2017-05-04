@@ -10,24 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="t27.surreyfooddeliverycompany.AdminHomeActivity">
 
-    <!-- Body -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/footer"
-        android:layout_below="@id/title"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/back">
-
-        <TextView
-            android:id="@+id/currentOrderInformation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Account list here" />
-
-    </RelativeLayout>
-
     <!-- Footer -->
     <LinearLayout
         android:id="@+id/footer"
@@ -46,6 +28,24 @@
             android:text="Add Account" />
 
     </LinearLayout>
+
+    <!-- Body -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/back">
+
+        <TextView
+            android:id="@+id/currentOrderInformation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Account list here" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/title"

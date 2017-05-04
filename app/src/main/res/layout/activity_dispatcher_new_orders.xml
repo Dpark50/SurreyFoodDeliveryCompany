@@ -55,6 +55,7 @@
 
                 </LinearLayout>
 
+                <!-- In progress orders -->
                 <LinearLayout
                     android:id="@+id/inprogress_btn"
                     android:layout_width="match_parent"
@@ -63,6 +64,7 @@
 
                 </LinearLayout>
 
+                <!-- Drivers -->
                 <LinearLayout
                     android:id="@+id/drivers_btn"
                     android:layout_width="match_parent"
@@ -71,6 +73,7 @@
 
                 </LinearLayout>
 
+                <!-- Profile -->
                 <LinearLayout
                     android:id="@+id/profile_btn"
                     android:layout_width="match_parent"

@@ -19,11 +19,11 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         tabHost.setup();
         TabHost.TabSpec tab1 = tabHost.newTabSpec("Tab1").setIndicator(null,
                 ResourcesCompat.getDrawable(getResources(),
-                        R.drawable.order_button, null))
+                        R.drawable.orders_btn, null))
                 .setContent(R.id.orders_btn);
         TabHost.TabSpec tab2 = tabHost.newTabSpec("Tab2").setIndicator(null,
                 ResourcesCompat.getDrawable(getResources(),
-                        R.drawable.settings_button, null))
+                        R.drawable.inprogress_btn, null))
                 .setContent(R.id.inprogress_btn);
         TabHost.TabSpec tab3 = tabHost.newTabSpec("Tab3").setIndicator(null,
                 ResourcesCompat.getDrawable(getResources(),
