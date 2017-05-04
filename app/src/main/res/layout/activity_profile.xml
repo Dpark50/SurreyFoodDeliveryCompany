@@ -11,182 +11,83 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="t27.surreyfooddeliverycompany.ProfileActivity">
 
-    <TextView
-        android:text="Profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="35dp"
-        android:id="@+id/textView" />
-
-    <TextView
-        android:text="Driver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:id="@+id/driver"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="2134 Elmo St."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/id"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:id="@+id/address" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
-        android:layout_marginTop="62dp"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Homer Simpson"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:id="@+id/name"
-        android:layout_below="@+id/driver"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="47000000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/id"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Current Session: 07:21:31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:id="@+id/session"
-        android:layout_below="@+id/address"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Sign Out"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/signOutButton"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@id/footer"
-        android:layout_centerHorizontal="true"
-        android:onClick="signOut"/>
-
-    <!-- Footer -->
-    <LinearLayout
-        android:id="@+id/footer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1.0">
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <!-- RelativeLayout as order button -->
-            <RelativeLayout
-                android:id="@+id/orders_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.0"
-                android:onClick="Orders">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/orders"
-                    android:src="@drawable/order_button" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Homer Simpson" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/orders"
-                    android:text="Orders"
-                    android:gravity="center"
-                    android:textColor="@color/colorBodyText" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/edit_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phone"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Address" />
 
-            <!-- Drivers button -->
-            <RelativeLayout
-                android:id="@+id/drivers_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.0"
-                android:onClick="DriversList">
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_address"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="email@email.com" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/drivers"
-                    android:src="@drawable/drivers_button" />
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/name"
+                android:layout_below="@+id/name"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="778-123-1234" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/drivers"
-                    android:text="Drivers"
-                    android:gravity="center"
-                    android:textColor="@color/colorBodyText" />
-            </RelativeLayout>
+            <Button
+                android:id="@+id/signOutButton"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phone"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:onClick="signOut"
+                android:text="Sign Out" />
 
-            <!-- Settings button -->
-            <RelativeLayout
-                android:id="@+id/settings_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.0"
-                android:onClick="Settings">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/settings"
-                    android:src="@drawable/settings_button" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/settings"
-                    android:text="Settings"
-                    android:gravity="center"
-                    android:textColor="@color/colorBodyText" />
-            </RelativeLayout>
-
-            <!-- Profile button -->
-            <RelativeLayout
-                android:id="@+id/profile_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:id="@+id/profile"
-                    android:src="@drawable/profile_button" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/profile"
-                    android:text="Profile"
-                    android:gravity="center"
-                    android:textColor="@color/colorBodyText" />
-            </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

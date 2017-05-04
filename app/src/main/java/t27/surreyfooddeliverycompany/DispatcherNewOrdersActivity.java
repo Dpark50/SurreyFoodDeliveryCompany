@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TabHost;
 
-public class DispatcherActivity extends AppCompatActivity {
+public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private Intent intent;
 
     @Override
@@ -15,7 +14,7 @@ public class DispatcherActivity extends AppCompatActivity {
         TabHost tabHost;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dispatcher);
+        setContentView(R.layout.activity_dispatcher_new_orders);
         tabHost = (TabHost)findViewById(R.id.tabhost);
         tabHost.setup();
         TabHost.TabSpec tab1 = tabHost.newTabSpec("Tab1").setIndicator(null,
@@ -38,23 +37,5 @@ public class DispatcherActivity extends AppCompatActivity {
         tabHost.addTab(tab2);
         tabHost.addTab(tab3);
         tabHost.addTab(tab4);
-    }
-
-    public void DriversList(View view) {
-        intent = new Intent(this, DriversListActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
-    public void Settings(View view) {
-        intent = new Intent(this, DispatcherSettingsActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
-    public void Profile(View view) {
-        intent = new Intent(this, ProfileActivity.class);
-        finish();
-        startActivity(intent);
     }
 }

@@ -16,7 +16,7 @@
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/sfd_logo" />
+        android:src="@drawable/sfd_logo_blue" />
 
     <TextView
         android:id="@+id/sfd"

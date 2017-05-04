@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_dispatcher_settings"
+    android:id="@+id/activity_drivers_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="t27.surreyfooddeliverycompany.DispatcherSettingsActivity">
+    tools:context="t27.surreyfooddeliverycompany.DispatcherDriversListActivity">
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp"
-        android:textStyle="bold"
-        android:text="Settings"
+        android:text="Driver List"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <!-- Footer -->
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
@@ -35,29 +35,51 @@
             android:layout_height="match_parent"
             android:layout_weight="1.0">
 
-            <!-- RelativeLayout as order button -->
+            <!-- new orders button -->
             <RelativeLayout
-                android:id="@+id/orders_btn"
+                android:id="@+id/new_orders_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="Orders">
+                android:onClick="NewOrders">
 
                 <ImageView
-                    android:id="@+id/orders"
+                    android:id="@+id/new_orders_icon"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:src="@drawable/order_button" />
+                    android:src="@drawable/order_button_blue" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/orders"
+                    android:layout_below="@+id/new_orders_icon"
                     android:layout_marginTop="2dp"
                     android:gravity="center"
-                    android:text="Orders"
+                    android:text="New"
+                    android:textColor="@color/colorBodyText" />
+            </RelativeLayout>
+
+            <!-- pending orders button -->
+            <RelativeLayout
+                android:id="@+id/pending_orders_btn"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:onClick="PendingOrders">
+
+                <ImageView
+                    android:id="@+id/pending_orders_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/order_button_blue" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/pending_orders_icon"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="Pending"
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
@@ -65,15 +87,14 @@
             <RelativeLayout
                 android:id="@+id/drivers_btn"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.0"
-                android:onClick="DriversList">
+                android:layout_height="match_parent"
+                android:layout_weight="1.0">
 
                 <ImageView
                     android:id="@+id/drivers"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:src="@drawable/drivers_button" />
+                    android:src="@drawable/drivers_button_blue" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -86,34 +107,12 @@
 
             </RelativeLayout>
 
-            <!-- Settings button -->
-            <RelativeLayout
-                android:id="@+id/settings_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1.0">
-
-                <ImageView
-                    android:id="@+id/settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:src="@drawable/settings_button" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/settings"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:text="Settings"
-                    android:textColor="@color/colorBodyText" />
-            </RelativeLayout>
 
             <!-- Profile button -->
             <RelativeLayout
                 android:id="@+id/profile_btn"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1.0"
                 android:onClick="Profile">
 
@@ -121,7 +120,7 @@
                     android:id="@+id/profile"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:src="@drawable/profile_button" />
+                    android:src="@drawable/profile_button_blue" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -134,4 +133,13 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <!-- Body -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/back"></RelativeLayout>
 </RelativeLayout>

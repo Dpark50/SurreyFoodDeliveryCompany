@@ -6,7 +6,7 @@
     <color name="colorAppBackground">#c1e4f2</color>
     <color name="colorTitleText">#000000</color>
     <color name="colorBodyText">#000000</color>
-    <color name="colorButtonBackground">#fae2eb</color>
+    <color name="colorButtonBackground">#c9ebff</color>
     <color name="colorHeaderText">#000000</color>
     <color name="colorButtonText">#ffffff</color>
 </resources>
