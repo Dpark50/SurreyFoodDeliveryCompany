@@ -18,8 +18,6 @@
         <activity android:name=".DriverHomeActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".DispatcherNewOrdersActivity" />
-        <activity android:name=".DispatcherDriversListActivity" />
-        <activity android:name=".DispatcherPendingOrdersActivity" />
         <activity android:name=".AdminHomeActivity" />
         <activity android:name=".AdminAddAccountActivity"></activity>
     </application>

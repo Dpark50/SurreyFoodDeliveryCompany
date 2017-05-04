@@ -18,22 +18,4 @@ public class ProfileActivity extends AppCompatActivity {
         //sign out
         finish();
     }
-
-    public void Orders(View view) {
-        intent = new Intent(this, DispatcherNewOrdersActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
-    public void DriversList(View view) {
-        intent = new Intent(this, DispatcherDriversListActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
-    public void Settings(View view) {
-        intent = new Intent(this, DispatcherPendingOrdersActivity.class);
-        finish();
-        startActivity(intent);
-    }
 }
