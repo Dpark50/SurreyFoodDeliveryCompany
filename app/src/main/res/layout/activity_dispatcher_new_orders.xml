@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="t27.surreyfooddeliverycompany.DispatcherActivity">
+    tools:context="t27.surreyfooddeliverycompany.DispatcherNewOrdersActivity">
 
     <TextView
         android:id="@+id/title"
@@ -21,14 +21,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="20dp"
         android:textStyle="bold" />
-
-    <!-- Body -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/footer"
-        android:layout_below="@id/title"
-        android:layout_marginBottom="15dp"></RelativeLayout>
 
     <!--footer-->
     <LinearLayout
@@ -43,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.0">
 
-            <!-- RelativeLayout as order button -->
+            <!-- new orders button -->
             <RelativeLayout
                 android:id="@+id/new_orders_btn"
                 android:layout_width="50dp"
@@ -66,12 +58,13 @@
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
-            <!-- RelativeLayout as order button -->
+            <!-- pending orders button -->
             <RelativeLayout
                 android:id="@+id/pending_orders_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0">
+                android:layout_weight="1.0"
+                android:onClick="PendingOrders">
 
                 <ImageView
                     android:id="@+id/pending_orders_icon"
@@ -141,5 +134,14 @@
         </LinearLayout>
     </LinearLayout>
     <!--end footer-->
+
+    <!-- Body -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/back"></RelativeLayout>
 
 </RelativeLayout>

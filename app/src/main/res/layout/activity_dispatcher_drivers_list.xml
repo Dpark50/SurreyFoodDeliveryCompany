@@ -8,28 +8,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="t27.surreyfooddeliverycompany.DriversListActivity">
+    tools:context="t27.surreyfooddeliverycompany.DispatcherDriversListActivity">
 
     <TextView
-        android:text="Driver List"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:textAppearance="@style/TextAppearance.AppCompat" />
-
-    <!-- Body -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title"
-        android:layout_above="@id/footer"
-        android:layout_marginBottom="15dp">
-    </RelativeLayout>
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:text="Driver List"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <!-- Footer -->
     <LinearLayout
@@ -44,12 +35,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1.0">
 
-            <!-- RelativeLayout as order button -->
+            <!-- new orders button -->
             <RelativeLayout
                 android:id="@+id/new_orders_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0">
+                android:layout_weight="1.0"
+                android:onClick="NewOrders">
 
                 <ImageView
                     android:id="@+id/new_orders_icon"
@@ -67,12 +59,13 @@
                     android:textColor="@color/colorBodyText" />
             </RelativeLayout>
 
-            <!-- RelativeLayout as order button -->
+            <!-- pending orders button -->
             <RelativeLayout
                 android:id="@+id/pending_orders_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0">
+                android:layout_weight="1.0"
+                android:onClick="PendingOrders">
 
                 <ImageView
                     android:id="@+id/pending_orders_icon"
@@ -95,8 +88,7 @@
                 android:id="@+id/drivers_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:onClick="DriversList">
+                android:layout_weight="1.0">
 
                 <ImageView
                     android:id="@+id/drivers"
@@ -141,4 +133,13 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <!-- Body -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/back"></RelativeLayout>
 </RelativeLayout>

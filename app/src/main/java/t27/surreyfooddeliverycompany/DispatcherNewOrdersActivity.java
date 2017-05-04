@@ -5,23 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class DispatcherSettingsActivity extends AppCompatActivity {
+public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dispatcher_pending_orders);
+        setContentView(R.layout.activity_dispatcher_new_orders);
     }
 
-    public void Orders(View view) {
-        intent = new Intent(this, DispatcherActivity.class);
+    public void DriversList(View view) {
+        intent = new Intent(this, DispatcherDriversListActivity.class);
         finish();
         startActivity(intent);
     }
 
-    public void DriversList(View view) {
-        intent = new Intent(this, DriversListActivity.class);
+    public void PendingOrders(View view) {
+        intent = new Intent(this, DispatcherPendingOrdersActivity.class);
         finish();
         startActivity(intent);
     }

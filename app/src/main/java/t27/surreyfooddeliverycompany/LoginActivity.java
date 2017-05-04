@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void Admin(View view) {
-        Intent intent = new Intent(this, DispatcherActivity.class);
+        Intent intent = new Intent(this, DispatcherNewOrdersActivity.class);
         startActivity(intent);
     }
 }
