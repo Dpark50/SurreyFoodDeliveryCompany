@@ -10,25 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="t27.surreyfooddeliverycompany.DispatcherNewOrdersActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp"
-        android:text="New Orders"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-
     <TabHost
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/title">
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -53,6 +40,22 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/orders_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="10dp"
+                        android:text="New Orders"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="hello"/>
                 </LinearLayout>
 
                 <!-- In progress orders -->
@@ -62,6 +65,22 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/inprogress_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="10dp"
+                        android:text="Orders In Progress"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="no"/>
                 </LinearLayout>
 
                 <!-- Drivers list -->
@@ -71,6 +90,22 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/drivers_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="10dp"
+                        android:text="Drivers"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="yes"/>
                 </LinearLayout>
 
                 <!-- Profile -->
@@ -80,6 +115,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/profile_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="10dp"
+                        android:text="Profile"
+                        android:textAppearance="@style/TextAppearance.AppCompat"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <!-- Content goes here -->
+                    
                 </LinearLayout>
             </FrameLayout>
         </RelativeLayout>
