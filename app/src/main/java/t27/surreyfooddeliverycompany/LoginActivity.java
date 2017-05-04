@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,8 +19,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        EditText idEditText = (EditText) findViewById(R.id.id_input);
-        String loginType = idEditText.getText().toString();
+        RadioGroup radioGroup_login_type = (RadioGroup) findViewById(R.id.typedt);
+        RadioButton selected = (RadioButton)findViewById(radioGroup_login_type.getCheckedRadioButtonId());
+        String loginType = selected.getText().toString();
         if (loginType.compareTo("dispatcher") == 0)
             intent = new Intent(this, DispatcherNewOrdersActivity.class);
         else if (loginType.compareTo("driver") == 0)
