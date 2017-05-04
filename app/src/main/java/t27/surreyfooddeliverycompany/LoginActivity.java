@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +17,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void login(View view) {
-        Intent intent = new Intent(this, DriverActivity.class);
+        EditText idEditText = (EditText) findViewById(R.id.id_input);
+        String loginType = idEditText.getText().toString();
+        if (loginType.compareTo("dispatcher") == 0)
+            intent = new Intent(this, DispatcherNewOrdersActivity.class);
+        else if (loginType.compareTo("driver") == 0)
+            intent = new Intent(this, DriverHomeActivity.class);
+        else if (loginType.compareTo("admin") == 0)
+            intent = new Intent(this, AdminHomeActivity.class);
+        else {
+            Toast.makeText(getApplicationContext(), "Invalid user name or password.", Toast.LENGTH_LONG).show();
+            return;
+        }
         startActivity(intent);
     }
 

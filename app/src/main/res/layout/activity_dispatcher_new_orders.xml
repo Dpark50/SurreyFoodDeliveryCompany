@@ -46,7 +46,7 @@
                     android:id="@+id/new_orders_icon"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:src="@drawable/order_button_blue" />
+                    android:src="@drawable/order_button_black" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="PendingOrders">
+                android:onClick="pendingOrders">
 
                 <ImageView
                     android:id="@+id/pending_orders_icon"
@@ -88,7 +88,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="DriversList">
+                android:onClick="driversList">
 
                 <ImageView
                     android:id="@+id/drivers"
@@ -114,7 +114,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:onClick="Profile">
+                android:onClick="profile">
 
                 <ImageView
                     android:id="@+id/profile"
