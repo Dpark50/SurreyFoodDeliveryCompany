@@ -11,7 +11,7 @@ public class DispatcherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dispatcher);
+        setContentView(R.layout.activity_dispatcher_new_orders);
     }
 
     public void DriversList(View view) {

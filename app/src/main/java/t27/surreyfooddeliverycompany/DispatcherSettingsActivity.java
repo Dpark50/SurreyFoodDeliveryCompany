@@ -11,7 +11,7 @@ public class DispatcherSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dispatcher_settings);
+        setContentView(R.layout.activity_dispatcher_pending_orders);
     }
 
     public void Orders(View view) {

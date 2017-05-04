@@ -99,7 +99,7 @@
 
             <!-- RelativeLayout as order button -->
             <RelativeLayout
-                android:id="@+id/orders_btn"
+                android:id="@+id/new_orders_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1.0"
