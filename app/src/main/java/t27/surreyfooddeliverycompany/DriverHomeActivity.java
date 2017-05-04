@@ -13,7 +13,7 @@ public class DriverHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver_home);
     }
 
-    protected void profile(View view) {
+    public void profile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }

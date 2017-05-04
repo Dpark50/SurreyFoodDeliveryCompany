@@ -14,7 +14,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
     }
 
-    protected void signOut (View view) {
+    public void signOut (View view) {
         //sign out
         finish();
     }

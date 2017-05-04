@@ -16,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    protected void login(View view) {
+    public void login(View view) {
         EditText idEditText = (EditText) findViewById(R.id.id_input);
         String loginType = idEditText.getText().toString();
         if (loginType.compareTo("dispatcher") == 0)
@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Invalid user name or password.", Toast.LENGTH_LONG).show();
             return;
         }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 

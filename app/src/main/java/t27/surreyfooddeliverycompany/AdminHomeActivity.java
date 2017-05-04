@@ -16,7 +16,15 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     public void addAccount(View view) {
         intent = new Intent(this, AdminAddAccountActivity.class);
-        finish();
+        startActivity(intent);
+    }
+
+    public void logout(View view) {
+
+        //ad logout function
+
+        intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }
