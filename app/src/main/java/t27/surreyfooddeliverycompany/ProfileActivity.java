@@ -16,6 +16,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void signOut (View view) {
         //sign out
-        finish();
+        intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
