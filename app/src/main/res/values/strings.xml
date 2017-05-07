@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SurreyFoodDeliveryCompany</string>
+    <string name="register_failed">Fail to sign up</string>
 </resources>
