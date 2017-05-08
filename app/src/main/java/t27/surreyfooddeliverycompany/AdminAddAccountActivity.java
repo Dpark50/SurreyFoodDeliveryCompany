@@ -1,9 +1,10 @@
 package t27.surreyfooddeliverycompany;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Pattern;
 
 import objectstodb.Account;
 
@@ -72,9 +75,6 @@ public class AdminAddAccountActivity extends AppCompatActivity {
         intent = new Intent(this, AdminHomeActivity.class);
         mAuth = FirebaseAuth.getInstance();
 
-
-
-
     }
 
     public void submitAddAccount(View view) {
@@ -88,56 +88,113 @@ public class AdminAddAccountActivity extends AppCompatActivity {
         phone = phone_EditText.getText().toString();
         address = address_EditText.getText().toString();
 
+        // Local validation
+        // Email validation
+        if (!isValidEmail(email)) {
+            email_EditText.setError("Invalid Email");
+            errorMessage();
+            return;
+        }
 
+        // Password validation
+        if (TextUtils.isEmpty(password)) {
+            password_EditText.setError("Enter a password");
+            errorMessage();
+            return;
+        }
 
+        if (!isValidPassword(password, password2)) {
+            password2_EditText.setError("Password does not match");
+            errorMessage();
+            return;
+        }
+
+        // Name validation
+        if (TextUtils.isEmpty(name)) {
+            name_EditText.setError("Enter your name");
+            errorMessage();
+            return;
+        }
+
+        // Phone number validation
+        if (!isValidNumber(phone)) {
+            phone_EditText.setError("Invalid phone number");
+            errorMessage();
+            return;
+        }
 
         //validate inputs
-
         Log.d(TAG, "submitAddAccount: email " + email);
         Log.d(TAG, "submitAddAccount: pass " + password);
         //add account to firebase db
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(AdminAddAccountActivity.this, R.string.register_failed,
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    //store to the database
-                                    FirebaseUser user = task.getResult().getUser();
-                                    accountUID = user.getUid();
-                                    Log.d(TAG, "onComplete: uid=" + accountUID);
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            errorMessage();
+                        } else {
+                            //store to the database
+                            FirebaseUser user = task.getResult().getUser();
+                            accountUID = user.getUid();
+                            Log.d(TAG, "onComplete: uid=" + accountUID);
 
-                                    if(user != null) {
-                                        addedAccount = new Account(accountUID,
-                                                accountType,
-                                                email,
-                                                password,
-                                                name,
-                                                phone,
-                                                address);
+                            if(user != null) {
+                                addedAccount = new Account(accountUID,
+                                        accountType,
+                                        email,
+                                        password,
+                                        name,
+                                        phone,
+                                        address);
 
-                                        mDatabaseRef.child("users").child(accountUID).setValue(addedAccount);
+                                mDatabaseRef.child("users").child(accountUID).setValue(addedAccount);
 
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                    }
-
-
-
-                                }
-
-                                // ...
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                             }
-                        });
-
-
+                        }
+                        // ...
+                    }
+                });
     }
+
+    public void errorMessage() {
+        Toast.makeText(AdminAddAccountActivity.this, R.string.register_failed,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    public Boolean isValidEmail(CharSequence email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS
+                .matcher(email).matches();
+    }
+
+    public Boolean isValidPassword(String password1, String password2) {
+        if (password1.compareTo(password2) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean isValidNumber(String number) {
+        boolean valid = false;
+
+        if (!Pattern.matches("[a-zA-Z]+", number)) {
+            if (number.length() != 10) {
+                return valid;
+            }
+
+            valid = true;
+        }
+
+        return valid;
+    }
+
 
 }
