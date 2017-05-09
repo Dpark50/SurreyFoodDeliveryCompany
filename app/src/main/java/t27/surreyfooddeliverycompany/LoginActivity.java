@@ -53,9 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         final String loginType = selected.getText().toString();
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
-
-        // ******Commented out for ease of access for now******
-
+        
         if (isEmptyInput(id)) {
             idInput.setError("Enter your ID");
             return;
@@ -77,8 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-
-        //***Commented out to login without validation for now ***
         mAuth.signInWithEmailAndPassword(id, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
