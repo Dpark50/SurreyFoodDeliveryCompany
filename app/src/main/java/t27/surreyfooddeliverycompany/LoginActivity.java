@@ -2,6 +2,7 @@ package t27.surreyfooddeliverycompany;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,9 +11,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import objectstodb.Account;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -49,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = passInput.getText().toString();
 
         // ******Commented out for ease of access for now******
-        /*
+
         if (isEmptyInput(id)) {
             idInput.setError("Enter your ID");
             return;
@@ -59,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             passInput.setError("Enter your password");
             return;
         }
-        */
+
         if (loginType.compareTo("dispatcher") == 0)
             intent = new Intent(this, DispatcherNewOrdersActivity.class);
         else if (loginType.compareTo("driver") == 0)
@@ -71,7 +82,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        /* ***Commented out to login without validation for now ***
+
+        //***Commented out to login without validation for now ***
         mAuth.signInWithEmailAndPassword(id, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -108,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-                */
     }
 
     public Boolean isEmptyInput(String input) {
