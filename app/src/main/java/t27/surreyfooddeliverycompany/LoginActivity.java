@@ -112,7 +112,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Account account = dataSnapshot.getValue(Account.class);
-                userPreferences = getApplicationContext().getSharedPreferences("userPreference", Context.MODE_PRIVATE);
+                userPreferences = getApplicationContext().getSharedPreferences(
+                        getString(R.string.user_preference), Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = userPreferences.edit();
                 Gson gson = new Gson();
                 String json = gson.toJson(account);
@@ -140,7 +141,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginRedirect() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("userPreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(
+                getString(R.string.user_preference), Context.MODE_PRIVATE);
 
         if (preferences.getString("accountUID", null) != null) {
             if (preferences.getString("loginType", null).compareTo("driver") == 0) {

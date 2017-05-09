@@ -17,10 +17,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void signOut (View view) {
-        SharedPreferences preferences = getSharedPreferences("userPreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(getString(
+                R.string.user_preference), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
 
         intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
