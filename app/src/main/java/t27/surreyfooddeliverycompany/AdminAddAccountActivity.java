@@ -102,7 +102,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
             return;
         }
 
-        if (!InputValidation.isWeakPassword(password)) {
+        if (InputValidation.isWeakPassword(password)) {
             password_EditText.setError("Password must contain at least 6 characters");
             errorMessage();
             return;

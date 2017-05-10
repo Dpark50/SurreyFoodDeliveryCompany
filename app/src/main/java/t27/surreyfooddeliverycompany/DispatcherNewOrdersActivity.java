@@ -1,6 +1,8 @@
 package t27.surreyfooddeliverycompany;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
@@ -62,6 +64,12 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     }
 
     public void SignOut(View view) {
+        SharedPreferences preferences = getSharedPreferences(getString(
+                R.string.user_preference), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
         intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
