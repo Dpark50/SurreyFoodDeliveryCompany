@@ -25,8 +25,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         text = (EditText) findViewById(R.id.input);
     }
 
-    // onbackclick implementation?
-
     public void sendEmail(View view) {
         String emailAddress = text.getText().toString();
         intent = new Intent(this, LoginActivity.class);
