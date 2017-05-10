@@ -19,8 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.regex.Pattern;
-
 import objectstodb.Account;
 
 public class AdminAddAccountActivity extends AppCompatActivity {
@@ -181,28 +179,4 @@ public class AdminAddAccountActivity extends AppCompatActivity {
         Toast.makeText(AdminAddAccountActivity.this, R.string.register_failed,
                 Toast.LENGTH_SHORT).show();
     }
-
-    public Boolean isValidPassword(String password1, String password2) {
-        if (password1.compareTo(password2) == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public Boolean isValidNumber(String number) {
-        boolean valid = false;
-
-        if (!Pattern.matches("[a-zA-Z]+", number)) {
-            if (number.length() != 10) {
-                return valid;
-            }
-
-            valid = true;
-        }
-
-        return valid;
-    }
-
-
 }
