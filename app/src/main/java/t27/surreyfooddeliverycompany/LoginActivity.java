@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -53,13 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         final String loginType = selected.getText().toString();
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
-        
-        if (isEmptyInput(id)) {
+
+        if (InputValidation.isEmptyInput(id)) {
             idInput.setError("Enter your ID");
             return;
         }
 
-        if (isEmptyInput(password)) {
+        if (InputValidation.isEmptyInput(password)) {
             passInput.setError("Enter your password");
             return;
         }
@@ -89,14 +88,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    public Boolean isEmptyInput(String input) {
-        if (TextUtils.isEmpty(input)) {
-            return true;
-        }
-
-        return false;
     }
 
     private void signInEmployee(final String loginType) {

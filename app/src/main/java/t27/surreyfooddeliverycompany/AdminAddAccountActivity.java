@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -90,34 +89,40 @@ public class AdminAddAccountActivity extends AppCompatActivity {
 
         // Local validation
         // Email validation
-        if (!isValidEmail(email)) {
+        if (!InputValidation.isValidEmail(email)) {
             email_EditText.setError("Invalid Email");
             errorMessage();
             return;
         }
 
         // Password validation
-        if (TextUtils.isEmpty(password)) {
+        if (InputValidation.isEmptyInput(password)) {
             password_EditText.setError("Enter a password");
             errorMessage();
             return;
         }
 
-        if (!isValidPassword(password, password2)) {
+        if (!InputValidation.isWeakPassword(password)) {
+            password_EditText.setError("Password must contain at least 6 characters");
+            errorMessage();
+            return;
+        }
+
+        if (!InputValidation.isSamePassword(password, password2)) {
             password2_EditText.setError("Password does not match");
             errorMessage();
             return;
         }
 
         // Name validation
-        if (TextUtils.isEmpty(name)) {
-            name_EditText.setError("Enter your name");
+        if (InputValidation.isEmptyInput(name)) {
+            name_EditText.setError("Enter a name");
             errorMessage();
             return;
         }
 
         // Phone number validation
-        if (!isValidNumber(phone)) {
+        if (!InputValidation.isValidPhoneNumber(phone)) {
             phone_EditText.setError("Invalid phone number");
             errorMessage();
             return;
@@ -159,7 +164,6 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         }
-                        // ...
                     }
                 });
     }
@@ -167,11 +171,6 @@ public class AdminAddAccountActivity extends AppCompatActivity {
     public void errorMessage() {
         Toast.makeText(AdminAddAccountActivity.this, R.string.register_failed,
                 Toast.LENGTH_SHORT).show();
-    }
-
-    public Boolean isValidEmail(CharSequence email) {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS
-                .matcher(email).matches();
     }
 
     public Boolean isValidPassword(String password1, String password2) {
