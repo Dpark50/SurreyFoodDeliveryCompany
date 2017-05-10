@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         RadioGroup radioGroup_login_type = (RadioGroup) findViewById(R.id.typedt);
         RadioButton selected = (RadioButton)findViewById(radioGroup_login_type.getCheckedRadioButtonId());
+        //type of the employee
         final String loginType = selected.getText().toString();
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
@@ -93,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     private void signInEmployee(final String loginType) {
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
-        Query accountQuery = mDatabase.child("users").child(accountUID);
+        //Query to add one employee
+        Query accountQuery = mDatabase.child(loginType).child(accountUID);
 
         accountQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

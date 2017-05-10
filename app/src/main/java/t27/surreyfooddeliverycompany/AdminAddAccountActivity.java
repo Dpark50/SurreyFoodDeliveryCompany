@@ -50,6 +50,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
     private String phone;
     private String address;
     private String accountType;
+    private String tableName;
 
     private Account addedAccount;
 
@@ -80,6 +81,13 @@ public class AdminAddAccountActivity extends AppCompatActivity {
 
         accountType_RadioButton = (RadioButton) findViewById(type_RadioGroup.getCheckedRadioButtonId());
         accountType = accountType_RadioButton.getText().toString();
+        tableName = accountType;
+
+        //customer and restaurant will store in the users table
+        if(accountType.equals("restaurant")||accountType.equals("customer")) {
+            tableName = "users";
+        }
+
         email = email_EditText.getText().toString();
         password = password_EditText.getText().toString();
         password2 = password2_EditText.getText().toString();
@@ -158,7 +166,8 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                                         phone,
                                         address);
 
-                                mDatabaseRef.child("users").child(accountUID).setValue(addedAccount);
+                                //add one employee to different db table
+                                mDatabaseRef.child(tableName).child(accountUID).setValue(addedAccount);
 
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
