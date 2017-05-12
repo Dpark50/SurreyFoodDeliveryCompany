@@ -21,7 +21,7 @@ import objectstodb.Account;
 
 public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private Intent intent;
-    private TabHost tabHost; //*************
+    private TabHost tabHost;
     private DatabaseReference mDatabaseRef;
     private ListView listview;
 
@@ -31,17 +31,21 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dispatcher_new_orders);
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         listview = (ListView) findViewById(R.id.drivers_list);
-        Query queryDrivers = mDatabaseRef.child("driver");
+        Query queryDrivers = mDatabaseRef.child("driver").orderByChild("status").equalTo("online");
         setTabs(tabHost);
 
         FirebaseListAdapter<Account> adapter = new FirebaseListAdapter<Account>(
-                DispatcherNewOrdersActivity.this, Account.class, R.layout.dispatcher_drivers_list, queryDrivers) {
+                DispatcherNewOrdersActivity.this, Account.class,
+                R.layout.dispatcher_drivers_list, queryDrivers) {
             @Override
             protected void populateView(View view, Account account, int i) {
                 TextView text = (TextView) view.findViewById(R.id.driver);
-                String driverDetails = account.getName() + "\nStatus: " +
-                        account.getStatus() + "\nPhone Number: " + account.getNumber();
-                text.setText(driverDetails);
+                String driverDetails;
+                if (account.getStatus().compareTo("online") == 0) {
+                    driverDetails = account.getName() + "\nStatus: " +
+                            account.getIdle() + "\nPhone Number: " + account.getNumber();
+                    text.setText(driverDetails);
+                }
             }
         };
 

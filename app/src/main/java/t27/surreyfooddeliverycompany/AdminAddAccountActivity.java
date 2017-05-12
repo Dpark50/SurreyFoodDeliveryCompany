@@ -42,6 +42,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
 
     private String accountUID;
     private String status;
+    private String idle;
     private String email;
     private String password;
     private String password2;
@@ -155,10 +156,12 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
                             accountUID = user.getUid();
                             status = "offline";
+                            idle = "idle";
                             Log.d(TAG, "onComplete: uid=" + status);
 
                             if(user != null) {
                                 addedAccount = new Account(status,
+                                        idle,
                                         accountType,
                                         email,
                                         password,
