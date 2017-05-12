@@ -8,17 +8,60 @@ import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
+
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import objectstodb.Account;
 
 public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private Intent intent;
-    private TabHost tabHost;
+    private TabHost tabHost; //*************
+    private DatabaseReference mDatabaseRef;
+    private ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dispatcher_new_orders);
-        tabHost = (TabHost)findViewById(R.id.tabhost);
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        listview = (ListView) findViewById(R.id.drivers_list);
+        Query queryDrivers = mDatabaseRef.child("driver");
+        setTabs(tabHost);
+
+        FirebaseListAdapter<Account> adapter = new FirebaseListAdapter<Account>(
+                DispatcherNewOrdersActivity.this, Account.class, R.layout.dispatcher_drivers_list, queryDrivers) {
+            @Override
+            protected void populateView(View view, Account account, int i) {
+                TextView text = (TextView) view.findViewById(R.id.driver);
+                String driverDetails = account.getName() + "\nStatus: " +
+                        account.getStatus() + "\nPhone Number: " + account.getNumber();
+                text.setText(driverDetails);
+            }
+        };
+
+        listview.setAdapter(adapter);
+    }
+
+    public void setTabColor(TabHost tabhost) {
+        int i = 0;
+
+        for(i = 0; i<tabhost.getTabWidget().getChildCount(); i++) {
+            tabhost.getTabWidget().getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        // Change colour of the selected tab
+        tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab())
+                .setBackgroundColor(Color.parseColor("#DBE4FB"));
+    }
+
+    private void setTabs(TabHost tabhost) {
+        tabHost = (TabHost) findViewById(R.id.tabhost);
         tabHost.setup();
         TabHost.TabSpec tab1 = tabHost.newTabSpec("Tab1").setIndicator(null,
                 ResourcesCompat.getDrawable(getResources(),
@@ -28,7 +71,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                 ResourcesCompat.getDrawable(getResources(),
                         R.drawable.inprogress_btn, null))
                 .setContent(R.id.inprogress_btn);
-        TabHost.TabSpec tab3 = tabHost.newTabSpec("Tab3").setIndicator(null,
+        final TabHost.TabSpec tab3 = tabHost.newTabSpec("Tab3").setIndicator(null,
                 ResourcesCompat.getDrawable(getResources(),
                         R.drawable.drivers_btn, null))
                 .setContent(R.id.drivers_btn);
@@ -49,18 +92,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         });
 
         setTabColor(tabHost);
-    }
-
-    public void setTabColor(TabHost tabhost) {
-        int i = 0;
-
-        for(i = 0; i<tabhost.getTabWidget().getChildCount(); i++) {
-            tabhost.getTabWidget().getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
-        }
-
-        // Change colour of the selected tab
-        tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab())
-                .setBackgroundColor(Color.parseColor("#DBE4FB"));
     }
 
     public void SignOut(View view) {

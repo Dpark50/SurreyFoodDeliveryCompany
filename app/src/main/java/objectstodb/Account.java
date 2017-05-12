@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 
 public class Account {
-    private String accountID;
+    private String status;
     private String accountType;
     private String email;
     private String password;
@@ -18,8 +18,8 @@ public class Account {
     private String address;
     private HashMap<String, Object> timestampCreated;
 
-    public Account(String accountID, String accountType, String email, String password, String name, String number, String address) {
-        this.accountID = accountID;
+    public Account(String status, String accountType, String email, String password, String name, String number, String address) {
+        this.status = status;
         this.accountType = accountType;
         this.email = email;
         this.password = password;
@@ -35,8 +35,8 @@ public class Account {
     public Account() {
     }
 
-    public String getAccountID() {
-        return accountID;
+    public String getStatus() {
+        return status;
     }
 
     public String getAccountType() {

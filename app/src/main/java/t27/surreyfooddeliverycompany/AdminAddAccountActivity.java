@@ -41,6 +41,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
     private RadioButton accountType_RadioButton;
 
     private String accountUID;
+    private String status;
     private String email;
     private String password;
     private String password2;
@@ -153,10 +154,11 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                             //store to the database
                             FirebaseUser user = task.getResult().getUser();
                             accountUID = user.getUid();
-                            Log.d(TAG, "onComplete: uid=" + accountUID);
+                            status = "offline";
+                            Log.d(TAG, "onComplete: uid=" + status);
 
                             if(user != null) {
-                                addedAccount = new Account(accountUID,
+                                addedAccount = new Account(status,
                                         accountType,
                                         email,
                                         password,
