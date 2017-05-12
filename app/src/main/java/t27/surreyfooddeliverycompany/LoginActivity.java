@@ -86,7 +86,10 @@ public class LoginActivity extends AppCompatActivity {
 
                             //refresh the notifi token
                             if(loginType.equals("dispatcher")) {
-                                mDatabase.child("dispatch_token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                mDatabase.child("dispatch_token").setValue(FirebaseInstanceId
+                                        .getInstance().getToken());
+                            } else if (loginType.equals("driver")) {
+                                setDriverStatus(loginType);
                             }
 
                         } else {
@@ -134,6 +137,15 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setDriverStatus(final String loginType) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        final String accountUID = user.getUid();
+
+        database.child(loginType).child(accountUID).child("status").setValue("online");
+        database.child(loginType).child(accountUID).child("idle").setValue("idle");
     }
 
     private void loginRedirect() {
