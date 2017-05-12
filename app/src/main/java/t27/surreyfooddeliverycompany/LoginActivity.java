@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import objectstodb.Account;
@@ -82,6 +83,12 @@ public class LoginActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         if (task.isSuccessful()) {
                             signInEmployee(loginType);
+
+                            //refresh the notifi token
+                            if(loginType.equals("dispatcher")) {
+                                mDatabase.child("dispatch_token").setValue(FirebaseInstanceId.getInstance().getToken());
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Invalid username or password",
