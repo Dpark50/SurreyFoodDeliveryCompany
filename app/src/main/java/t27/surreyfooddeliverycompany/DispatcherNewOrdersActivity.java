@@ -24,6 +24,11 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private TabHost tabHost;
     private DatabaseReference mDatabaseRef;
     private ListView listview;
+    private SharedPreferences userPreference;
+    private TextView name;
+    private TextView address;
+    private TextView email;
+    private TextView phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,10 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dispatcher_new_orders);
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         listview = (ListView) findViewById(R.id.drivers_list);
+        name = (TextView) findViewById(R.id.name);
+        address = (TextView) findViewById(R.id.edit_address);
+        email = (TextView) findViewById(R.id.email);
+        phoneNumber = (TextView) findViewById(R.id.phone);
         Query queryDrivers = mDatabaseRef.child("driver").orderByChild("status").equalTo("online");
         setTabs(tabHost);
 
