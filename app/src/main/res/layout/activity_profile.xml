@@ -43,8 +43,7 @@
                 android:layout_below="@id/imageView"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:text="Homer Simpson" />
+                android:layout_marginTop="20dp" />
 
             <TextView
                 android:id="@+id/edit_address"
@@ -63,8 +62,7 @@
                 android:layout_below="@+id/edit_address"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="email@email.com" />
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:id="@+id/phone"
@@ -73,8 +71,7 @@
                 android:layout_alignEnd="@+id/name"
                 android:layout_below="@+id/name"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="778-123-1234" />
+                android:layout_marginTop="5dp" />
 
             <Button
                 android:id="@+id/signOutButton"

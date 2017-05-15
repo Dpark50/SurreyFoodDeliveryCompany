@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import objectstodb.Account;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         RadioGroup radioGroup_login_type = (RadioGroup) findViewById(R.id.typedt);
         RadioButton selected = (RadioButton)findViewById(radioGroup_login_type.getCheckedRadioButtonId());
+        //type of the employee
         final String loginType = selected.getText().toString();
         String id = idInput.getText().toString();
         String password = passInput.getText().toString();
@@ -81,6 +83,18 @@ public class LoginActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         if (task.isSuccessful()) {
                             signInEmployee(loginType);
+
+
+                            //refresh the notifi token
+                            String tok = FirebaseInstanceId
+                                    .getInstance().getToken();
+                            if(loginType.equals("dispatcher")) {
+                                if(tok!=null)
+                                    mDatabase.child("dispatch_token").child(tok).setValue(true);
+                            } else if (loginType.equals("driver")) {
+                                setDriverStatus(loginType);
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Invalid username or password",
@@ -93,7 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     private void signInEmployee(final String loginType) {
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
-        Query accountQuery = mDatabase.child("users").child(accountUID);
+        //Query to add one employee
+        Query accountQuery = mDatabase.child(loginType).child(accountUID);
 
         accountQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -125,6 +140,15 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setDriverStatus(final String loginType) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        final String accountUID = user.getUid();
+
+        database.child(loginType).child(accountUID).child("status").setValue("online");
+        database.child(loginType).child(accountUID).child("idle").setValue("idle");
     }
 
     private void loginRedirect() {

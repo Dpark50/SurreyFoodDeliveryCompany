@@ -9,7 +9,16 @@ import java.util.HashMap;
  */
 
 public class Account {
-    private String accountID;
+
+
+    //for drivers
+    private String status;
+    private String idle;
+    private String nofToken;
+    //
+
+
+
     private String accountType;
     private String email;
     private String password;
@@ -18,8 +27,9 @@ public class Account {
     private String address;
     private HashMap<String, Object> timestampCreated;
 
-    public Account(String accountID, String accountType, String email, String password, String name, String number, String address) {
-        this.accountID = accountID;
+    public Account(String status, String idle, String accountType, String email, String password, String name, String number, String address) {
+        this.status = status;
+        this.idle = idle;
         this.accountType = accountType;
         this.email = email;
         this.password = password;
@@ -35,8 +45,20 @@ public class Account {
     public Account() {
     }
 
-    public String getAccountID() {
-        return accountID;
+    public String getNofToken() {
+        return nofToken;
+    }
+
+    public void setNofToken(String nofToken) {
+        this.nofToken = nofToken;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getIdle() {
+        return idle;
     }
 
     public String getAccountType() {
@@ -65,6 +87,42 @@ public class Account {
 
     public HashMap<String, Object> getTimestampCreated() {
         return timestampCreated;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setIdle(String idle) {
+        this.idle = idle;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTimestampCreated(HashMap<String, Object> timestampCreated) {
+        this.timestampCreated = timestampCreated;
     }
 
 

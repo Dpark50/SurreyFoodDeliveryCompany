@@ -19,8 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.regex.Pattern;
-
 import objectstodb.Account;
 
 public class AdminAddAccountActivity extends AppCompatActivity {
@@ -43,6 +41,8 @@ public class AdminAddAccountActivity extends AppCompatActivity {
     private RadioButton accountType_RadioButton;
 
     private String accountUID;
+    private String status;
+    private String idle;
     private String email;
     private String password;
     private String password2;
@@ -50,6 +50,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
     private String phone;
     private String address;
     private String accountType;
+    private String tableName;
 
     private Account addedAccount;
 
@@ -80,6 +81,13 @@ public class AdminAddAccountActivity extends AppCompatActivity {
 
         accountType_RadioButton = (RadioButton) findViewById(type_RadioGroup.getCheckedRadioButtonId());
         accountType = accountType_RadioButton.getText().toString();
+        tableName = accountType;
+
+        //customer and restaurant will store in the users table
+        if(accountType.equals("restaurant")||accountType.equals("customer")) {
+            tableName = "users";
+        }
+
         email = email_EditText.getText().toString();
         password = password_EditText.getText().toString();
         password2 = password2_EditText.getText().toString();
@@ -147,10 +155,13 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                             //store to the database
                             FirebaseUser user = task.getResult().getUser();
                             accountUID = user.getUid();
-                            Log.d(TAG, "onComplete: uid=" + accountUID);
+                            status = "offline";
+                            idle = "idle";
+                            Log.d(TAG, "onComplete: uid=" + status);
 
                             if(user != null) {
-                                addedAccount = new Account(accountUID,
+                                addedAccount = new Account(status,
+                                        idle,
                                         accountType,
                                         email,
                                         password,
@@ -158,7 +169,8 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                                         phone,
                                         address);
 
-                                mDatabaseRef.child("users").child(accountUID).setValue(addedAccount);
+                                //add one employee to different db table
+                                mDatabaseRef.child(tableName).child(accountUID).setValue(addedAccount);
 
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
@@ -172,28 +184,4 @@ public class AdminAddAccountActivity extends AppCompatActivity {
         Toast.makeText(AdminAddAccountActivity.this, R.string.register_failed,
                 Toast.LENGTH_SHORT).show();
     }
-
-    public Boolean isValidPassword(String password1, String password2) {
-        if (password1.compareTo(password2) == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public Boolean isValidNumber(String number) {
-        boolean valid = false;
-
-        if (!Pattern.matches("[a-zA-Z]+", number)) {
-            if (number.length() != 10) {
-                return valid;
-            }
-
-            valid = true;
-        }
-
-        return valid;
-    }
-
-
 }

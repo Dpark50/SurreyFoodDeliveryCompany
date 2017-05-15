@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -61,9 +62,12 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         SharedPreferences preferences = getSharedPreferences(getString(
                 R.string.user_preference), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+
+        mAuth.signOut();
         editor.clear();
         editor.apply();
 

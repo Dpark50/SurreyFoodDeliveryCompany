@@ -26,7 +26,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void sendEmail(View view) {
-        String emailAddress = text.getText().toString();
+        final String emailAddress = text.getText().toString();
         intent = new Intent(this, LoginActivity.class);
 
         auth.sendPasswordResetEmail(emailAddress)
