@@ -16,6 +16,7 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.gson.Gson;
 
 import objectstodb.Account;
 
@@ -24,7 +25,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private TabHost tabHost;
     private DatabaseReference mDatabaseRef;
     private ListView listview;
-    private SharedPreferences userPreference;
     private TextView name;
     private TextView address;
     private TextView email;
@@ -59,6 +59,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         };
 
         listview.setAdapter(adapter);
+        setProfileInfo();
     }
 
     public void setTabColor(TabHost tabhost) {
@@ -107,6 +108,25 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         setTabColor(tabHost);
     }
 
+    private void setProfileInfo() {
+        SharedPreferences userPreference = getApplicationContext().getSharedPreferences(
+                getString(R.string.user_preference), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = userPreference.getString("userObject", null);
+        if (json != null) {
+            Account account = gson.fromJson(json, Account.class);
+            String accountName = account.getName();
+            String accountAddress = account.getAddress();
+            String accountEmail = account.getEmail();
+            String accountPhone = account.getNumber();
+
+            name.setText(accountName);
+            address.setText(accountAddress);
+            email.setText(accountEmail);
+            phoneNumber.setText(accountPhone);
+        }
+    }
+
     public void SignOut(View view) {
         SharedPreferences preferences = getSharedPreferences(getString(
                 R.string.user_preference), Context.MODE_PRIVATE);
@@ -119,7 +139,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void mapButton (View view) {
+    public void mapButton (View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }

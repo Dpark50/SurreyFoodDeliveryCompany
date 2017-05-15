@@ -86,6 +86,13 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
+                    <Button
+                        android:text="Map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/map"
+                        android:onClick="mapButton"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -198,15 +205,4 @@
             </FrameLayout>
         </RelativeLayout>
     </TabHost>
-
-    <Button
-        android:text="Map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="512dp"
-        android:id="@+id/map"
-        android:onClick="mapButton"/>
 </RelativeLayout>
