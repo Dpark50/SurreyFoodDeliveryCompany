@@ -110,7 +110,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void mapButton (View view) {
+    public void mapButton (View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }

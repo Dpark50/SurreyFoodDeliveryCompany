@@ -84,10 +84,13 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             signInEmployee(loginType);
 
+
                             //refresh the notifi token
+                            String tok = FirebaseInstanceId
+                                    .getInstance().getToken();
                             if(loginType.equals("dispatcher")) {
-                                mDatabase.child("dispatch_token").setValue(FirebaseInstanceId
-                                        .getInstance().getToken());
+                                if(tok!=null)
+                                    mDatabase.child("dispatch_token").child(tok).setValue(true);
                             } else if (loginType.equals("driver")) {
                                 setDriverStatus(loginType);
                             }

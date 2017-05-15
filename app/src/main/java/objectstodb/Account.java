@@ -9,8 +9,16 @@ import java.util.HashMap;
  */
 
 public class Account {
+
+
+    //for drivers
     private String status;
     private String idle;
+    private String nofToken;
+    //
+
+
+
     private String accountType;
     private String email;
     private String password;
@@ -35,6 +43,14 @@ public class Account {
 
 
     public Account() {
+    }
+
+    public String getNofToken() {
+        return nofToken;
+    }
+
+    public void setNofToken(String nofToken) {
+        this.nofToken = nofToken;
     }
 
     public String getStatus() {
@@ -71,6 +87,42 @@ public class Account {
 
     public HashMap<String, Object> getTimestampCreated() {
         return timestampCreated;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setIdle(String idle) {
+        this.idle = idle;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTimestampCreated(HashMap<String, Object> timestampCreated) {
+        this.timestampCreated = timestampCreated;
     }
 
 
