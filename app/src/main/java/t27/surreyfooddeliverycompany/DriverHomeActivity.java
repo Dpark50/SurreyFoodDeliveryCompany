@@ -2,8 +2,11 @@ package t27.surreyfooddeliverycompany;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +49,26 @@ public class DriverHomeActivity extends AppCompatActivity {
         };
 
         listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showDialog();
+            }
+        });
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.order_completion, null);
+        builder.setView(dialogView);
+
+        TextView title = (TextView) dialogView.findViewById(R.id.title);
+        String dialogTitle = "Order Status";
+        title.setText(dialogTitle);
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void profile(View view) {

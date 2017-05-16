@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -42,7 +41,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import LocalOrders.CachedOrderPrefrence;
 import LocalOrders.CheckConnection;
 import LocalOrders.InProgressAdapter;
 import LocalOrders.NewOrderAdapter;
@@ -96,7 +94,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
 
         setTabs(tabHost);
         Query queryDrivers = mDatabaseRef.child("driver").orderByChild("status").equalTo("online");
-
 
         driversAdapter = new FirebaseListAdapter<Account>(
                 DispatcherNewOrdersActivity.this, Account.class,
