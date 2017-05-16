@@ -11,6 +11,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -158,12 +160,76 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Order changeorder = dataSnapshot.getValue(Order.class);
+                String driv = changeorder.getDriverUID();
+                String changedState = changeorder.getState();
+                String orderUID = changeorder.getOrderUid();
+
+                /*if(dataSnapshot.exists()) {
+                    return;
+                }
+
+
+                */
+                if(changedState.equals("processing")&&driv!=null) {
+                    Iterator<Order> it = newOrder_list.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getOrderUid().equals(orderUID)) {
+                            Log.d("DispatcherAct", "onChildChanged: remove old item " +orderUID+"from inProgress_list" );
+                            it.remove();
+                            new_ordersAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+
+                } else if(changedState.equals("delivering")) {
+                    Iterator<Order> it = inProgress_list.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getOrderUid().equals(orderUID)) {
+                            Log.d("DispatcherAct", "onChildChanged: remove old item " +orderUID+"from inProgress_list" );
+                            it.remove();
+                            break;
+                        }
+                    }
+
+                } else if(changedState.equals("finished")) {
+                    Iterator<Order> it = inProgress_list.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getOrderUid().equals(orderUID)) {
+                            Log.d("DispatcherAct", "onChildChanged: remove old item " +orderUID+"from inProgress_list" );
+                            it.remove();
+                            break;
+                        }
+                    }
+                } else {
+                    return;
+                }
+                inProgress_list.add(changeorder);
+                // Sorting
+                sortList(inProgress_list);
+                inprogress_orderAdapter.notifyDataSetChanged();
 
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                Order removeorder = dataSnapshot.getValue(Order.class);
+                String removeState = removeorder.getState();
+                String orderUID = removeorder.getOrderUid();
+                if(removeState.equals("finished")) {
+                    Iterator<Order> it = inProgress_list.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getOrderUid().equals(orderUID)) {
+                            Log.d("DispatcherAct", "onChildRemoved: remove old item " +orderUID+"from inProgress_list" );
+                            it.remove();
+                            break;
+                        }
+                    }
+                    inProgress_list.add(removeorder);
+                    // Sorting
+                    sortList(inProgress_list);
+                    inprogress_orderAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -183,16 +249,22 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                 GenericTypeIndicator<HashMap<String,Order>> type_orders_list =
                         new GenericTypeIndicator<HashMap<String,Order>>() {};
                 map_uid_to_order = dataSnapshot.getValue(type_orders_list);
+
+                if(map_uid_to_order==null) {
+                    map_uid_to_order = new HashMap<String, Order>();
+                }
                 //store as a map
 
-                //get current email for saving orders to sharedPreference
+                /*//get current email for saving orders to sharedPreference
                 String curEmail = getApplicationContext().getSharedPreferences(
                         getString(R.string.user_preference), Context.MODE_PRIVATE).getString("curEmail",null);
                 //store orders as hashMap
                 //merge with the old ones
-                CachedOrderPrefrence.saveOrderMapToAppByEmail(getApplicationContext(),curEmail,map_uid_to_order);
+                CachedOrderPrefrence.saveOrderMapToAppByEmail(getApplicationContext(),curEmail,map_uid_to_order);*/
                 //get the orders in correct state
-                map_uid_to_order.putAll(CachedOrderPrefrence.getOrderByEmail(getApplicationContext(),curEmail)) ;
+                //map_uid_to_order.putAll(CachedOrderPrefrence.getOrderByEmail(getApplicationContext(),curEmail)) ;
+
+
                 newOrder_list = newAndInProgressFun.getNewOrdersFromMap(map_uid_to_order);
                 inProgress_list = newAndInProgressFun.getInProgressOrdersFromMap(map_uid_to_order);
                 // Sorting new orders
@@ -216,6 +288,12 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             }
         });
         //--------------end------get orders from db and merge them with local records
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     public void setTabColor(TabHost tabhost) {
@@ -422,13 +500,13 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                     if (databaseError == null) {
                                         Toast.makeText(DispatcherNewOrdersActivity.this, "Order assigned", Toast.LENGTH_LONG).show();
-                                        //move the order from new list to in-progress list
+                                        /*//move the order from new list to in-progress list
                                         selectedOrder.setDriverUID(selectedDriver.getAccountUID());
                                         selectedOrder.setState("processing");
                                         newOrder_list.remove(selectedOrder);
                                         inProgress_list.add(selectedOrder);
                                         new_ordersAdapter.notifyDataSetChanged();
-                                        inprogress_orderAdapter.notifyDataSetChanged();
+                                        inprogress_orderAdapter.notifyDataSetChanged();*/
                                         outdia.dismiss();
                                         dialog.dismiss();
                                     }else {

@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import objectstodb.Account;
@@ -59,8 +60,16 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
 
-        database.child("driver").child(accountUID).child("status").setValue("offline");
-        database.child("driver").child(accountUID).child("idle").setValue("idle");
+        if(preferences.getString("loginType","").equals("driver")) {
+            database.child("driver").child(accountUID).child("status").setValue("offline");
+            database.child("driver").child(accountUID).child("idle").setValue("idle");
+        } else if(preferences.getString("loginType","").equals("dispatcher")) {
+            //refresh the notifi token
+            String tok = FirebaseInstanceId
+                    .getInstance().getToken();
+            database.child("dispatch_token").child(tok).setValue(null);
+        }
+
         mAuth.signOut();
         editor.clear();
         editor.apply();
