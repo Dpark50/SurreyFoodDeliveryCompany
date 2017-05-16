@@ -10,13 +10,17 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -96,8 +100,21 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             @Override
             protected void populateView(View view, Account account, int i) {
                 TextView text = (TextView) view.findViewById(R.id.driver);
+
+                //letter image
+                ImageView image = (ImageView) view.findViewById(R.id.image_view);
                 String driverDetails;
                 if (account.getStatus().compareTo("online") == 0) {
+
+                    ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+                    // generate random color
+                    int color = generator.getColor(account.getName().substring(0,1));
+                    //set the first letter as the image content
+                    TextDrawable drawable = TextDrawable.builder()
+                            .buildRound(account.getName().substring(0,1), color);
+                    //set the image
+                    image.setImageDrawable(drawable);
+
                     driverDetails = account.getName() + "\nStatus: " +
                             account.getIdle() + "\nPhone Number: " + account.getNumber();
                     text.setText(driverDetails);
@@ -303,7 +320,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         queryOrders.removeEventListener(childAddedListener);
     }
 
-    //onclick for new orders
+    //onclick for new order items
     private class NewOrderItemOnClickListener implements AdapterView.OnItemClickListener {
 
         @Override
@@ -312,32 +329,63 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
 
             // driver list to be selected
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
-            //builderSingle.setIcon(R.drawable.ic_launcher);
-            builderSingle.setTitle("Select One driver:");
 
-            builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            //builderSingle.setIcon(R.drawable.ic_launcher);
+            //builderSingle.setTitle("Select One driver:");
+
+            //layout of the first dialog
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.first_popup_in_new_order_tab, null);
+            builderSingle.setView(dialogView);
+            TextView tvTitle = (TextView) dialogView.findViewById(R.id.first_popup_tv);
+            String title_for_popup = "Select a driver:";
+            tvTitle.setText(title_for_popup);
+            //----------end-----------layout of the first dialog
+
+            ListView listDrivers = (ListView) dialogView.findViewById(R.id.first_popup_lv);
+            listDrivers.setAdapter(driversAdapter);
+
+            //when a driver is selected, pops up another page for confirmation
+            listDrivers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                   Account selectedDriver = (Account)parent.getItemAtPosition(position);
+
+                    AlertDialog.Builder builderInner = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
+                    builderInner.setMessage(selectedDriver.getName());
+                    builderInner.setTitle("Selected driver:");
+                    builderInner.setPositiveButton("Confirmed", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builderInner.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builderInner.create().show();
+
+                }
+            });
+
+            builderSingle.setNegativeButton("Close", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
 
-            builderSingle.setAdapter(driversAdapter, new DialogInterface.OnClickListener() {
+            /*builderSingle.setAdapter(driversAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Account driver = driversAdapter.getItem(which);
-                    AlertDialog.Builder builderInner = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
-                    builderInner.setMessage(driver.getName());
-                    builderInner.setTitle("Your Selected Item is");
-                    builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog,int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builderInner.show();
+
+
                 }
-            });
+            });*/
             builderSingle.show();
         }
     }
