@@ -19,12 +19,12 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/back">
 
-        <TextView
-            android:id="@+id/currentOrderInformation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="\n   An Order\n   Homer\n   1234 Simpson Drive\n   3x Pizza" />
+        <ListView
+            android:id="@+id/order_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </ListView>
     </RelativeLayout>
 
     <!-- Footer -->
@@ -57,6 +57,4 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="20dp"
         android:textStyle="bold" />
-
-
 </RelativeLayout>

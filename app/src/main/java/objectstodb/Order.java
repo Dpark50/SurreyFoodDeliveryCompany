@@ -262,4 +262,32 @@ public class Order {
     public void setTimestampCreated(HashMap<String, Object> timestampCreated) {
         this.timestampCreated = timestampCreated;
     }
+
+    public String orderDetail() {
+        if (orderType.compareTo("customer") == 0 || orderType.compareTo("Customer") == 0) {
+            // Restaurant's order
+            return "Order type: " + orderType +
+                    "\nCustomer: " + drop_cust_name +
+                    "\nCustomer's phone number: " + drop_phone +
+                    "\nCustomer's address: " + drop_address +
+                    "\nOrder details: " + order_detail +
+                    "\nTotal amount: " + cust_total +
+                    "\nPayment method: " + payment_method +
+                    "\nOrder Status: " + state;
+        }
+
+        // Customer's order
+        return "Order type: " + orderType +
+                "\nRestaurant: " + rest_name +
+                "\nRestaurant's phone number: " + rest_phone +
+                "\nRestaurant's address: " + rest_address +
+                "\nReady in: " + rest_ready_min + " min" +
+                "\nTotal amount: " + cust_total +
+                "\nCustomer: " + drop_cust_name +
+                "\nCustomer's phone number: " + drop_phone +
+                "\nCustomer's address: " + drop_address +
+                "\nOrder details: " + order_detail +
+                "\nPayment method: " + payment_method +
+                "\nOrder Status: " + state;
+    }
 }
