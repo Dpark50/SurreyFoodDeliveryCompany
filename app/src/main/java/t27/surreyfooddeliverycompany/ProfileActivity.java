@@ -55,20 +55,26 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         SharedPreferences preferences = getSharedPreferences(getString(
                 R.string.user_preference), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
 
-        if(preferences.getString("loginType","").equals("driver")) {
+        String type = preferences.getString("loginType","");
+        System.out.print(type);
+
+
+        if(type.equals("driver")) {
             database.child("driver").child(accountUID).child("status").setValue("offline");
             database.child("driver").child(accountUID).child("idle").setValue("idle");
-        } else if(preferences.getString("loginType","").equals("dispatcher")) {
-            //refresh the notifi token
+        } else if(type.equals("dispatcher")) {
+            //the notifi token
             String tok = FirebaseInstanceId
                     .getInstance().getToken();
-            database.child("dispatch_token").child(tok).setValue(null);
+            database.child("dispatch_token").child(tok).removeValue();
+            System.out.print(tok);
         }
+        SharedPreferences.Editor editor = preferences.edit();
 
         mAuth.signOut();
         editor.clear();
