@@ -394,7 +394,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //detach
-        queryOrders.removeEventListener(childAddedListener);
+        //queryOrders.removeEventListener(childAddedListener);
     }
 
     //onclick for new order items
