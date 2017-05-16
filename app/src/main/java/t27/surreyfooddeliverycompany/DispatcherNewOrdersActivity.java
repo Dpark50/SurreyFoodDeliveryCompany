@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import LocalOrders.CachedOrderPrefrence;
+import LocalOrders.CheckConnection;
 import LocalOrders.InProgressAdapter;
 import LocalOrders.NewOrderAdapter;
 import LocalOrders.newAndInProgressFun;
@@ -490,6 +491,13 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                     builderInner.setPositiveButton("Confirmed", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
+
+                            if(!CheckConnection.isOnline(DispatcherNewOrdersActivity.this)) {
+                                Toast.makeText(DispatcherNewOrdersActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
+                                outdia.dismiss();
+                                dialog.dismiss();
+                                return;
+                            }
 
                             //Confirm assigning to the selected driver
                             Map<String, Object> orderUpdate = new HashMap<String, Object>();
