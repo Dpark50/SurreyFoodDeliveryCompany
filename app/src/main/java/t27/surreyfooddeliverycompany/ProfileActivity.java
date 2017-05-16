@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -61,19 +62,19 @@ public class ProfileActivity extends AppCompatActivity {
         final String accountUID = user.getUid();
 
         String type = preferences.getString("loginType","");
-        System.out.print(type);
+        Log.d("profileAct", "signOut: type" + type);;
 
 
         if(type.equals("driver")) {
             database.child("driver").child(accountUID).child("status").setValue("offline");
             database.child("driver").child(accountUID).child("idle").setValue("idle");
-        } else if(type.equals("dispatcher")) {
+        } /*else if(type.equals("dispatcher")) {
             //the notifi token
             String tok = FirebaseInstanceId
                     .getInstance().getToken();
             database.child("dispatch_token").child(tok).removeValue();
-            System.out.print(tok);
-        }
+            Log.d("profileAct", "signOut: token:" + tok);
+        }*/
         SharedPreferences.Editor editor = preferences.edit();
 
         mAuth.signOut();

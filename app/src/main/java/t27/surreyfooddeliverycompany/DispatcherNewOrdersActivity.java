@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -362,6 +363,11 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     public void SignOut(View view) {
         SharedPreferences preferences = getSharedPreferences(getString(
                 R.string.user_preference), Context.MODE_PRIVATE);
+
+            String tok = FirebaseInstanceId
+                    .getInstance().getToken();
+        mDatabaseRef.child("dispatch_token").child(tok).removeValue();
+            Log.d("profileAct", "signOut: token:" + tok);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
