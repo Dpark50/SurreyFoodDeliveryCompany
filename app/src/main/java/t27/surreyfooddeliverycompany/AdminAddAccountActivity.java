@@ -167,7 +167,8 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                                         password,
                                         name,
                                         phone,
-                                        address);
+                                        address,
+                                        accountUID);
 
                                 //add one employee to different db table
                                 mDatabaseRef.child(tableName).child(accountUID).setValue(addedAccount);

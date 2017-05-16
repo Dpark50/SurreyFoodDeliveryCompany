@@ -10,6 +10,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -322,10 +323,12 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
 
     //onclick for new order items
     private class NewOrderItemOnClickListener implements AdapterView.OnItemClickListener {
+        private Order selectedOrder;
+        private AlertDialog outdia;
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Order selectedOrder = (Order)parent.getItemAtPosition(position);
+            selectedOrder = (Order)parent.getItemAtPosition(position);
 
             // driver list to be selected
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
@@ -349,28 +352,105 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             listDrivers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                   Account selectedDriver = (Account)parent.getItemAtPosition(position);
+                   final Account selectedDriver = (Account)parent.getItemAtPosition(position);
 
-                    AlertDialog.Builder builderInner = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
-                    builderInner.setMessage(selectedDriver.getName());
-                    builderInner.setTitle("Selected driver:");
+                    final AlertDialog.Builder builderInner = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
+                    //inner dialog layout
+                    LayoutInflater inflater = getLayoutInflater();
+                    View innerdialogView = inflater.inflate(R.layout.order_assign_confirmation_popup, null);
+                    builderInner.setView(innerdialogView);
+                    TextView driver_Title = (TextView) innerdialogView.findViewById(R.id.tv_title_for_driver);
+                    TextView orderTitle = (TextView) innerdialogView.findViewById(R.id.tv_title_for_order);
+                    //end-------inner dialog layout
+
+
+
+                    //TODO change ui for confirmation driver
+                    //-------------------------------------------------------setting driver info---
+                    TextView text = (TextView) innerdialogView.findViewById(R.id.driver);
+                    //letter image
+                    ImageView image = (ImageView) innerdialogView.findViewById(R.id.image_view);
+
+                    String driverDetails;
+
+                        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+                        // generate random color
+                        int color = generator.getColor(selectedDriver.getName().substring(0,1));
+                        //set the first letter as the image content
+                        TextDrawable drawable = TextDrawable.builder()
+                                .buildRound(selectedDriver.getName().substring(0,1), color);
+                        //set the image
+                        image.setImageDrawable(drawable);
+
+                        driverDetails = selectedDriver.getName() + "\nStatus: " +
+                                selectedDriver.getIdle() + "\nPhone Number: " + selectedDriver.getNumber();
+                        text.setText(driverDetails);
+
+                        //---------------------------------------end setting driver info
+
+                    //TODO change ui for confirmation order
+                    //----------------------setting order info -------------------------------
+                    // Lookup view for data population
+                    TextView tvType = (TextView) innerdialogView.findViewById(R.id.tvType);
+                    TextView tvDetail = (TextView) innerdialogView.findViewById(R.id.tvDetail);
+                    TextView tvStatus = (TextView) innerdialogView.findViewById(R.id.tvStatus);
+
+                    // Populate the data into the template view using the data object
+                    String description;
+                    String status;
+                    String type;
+                    if (selectedOrder != null) {
+                        type  = "Order Type: <font color=\"red\">"+selectedOrder.getOrderType() + "</font>";
+                        description= "Order Detail: <font color=\"red\">"+selectedOrder.getOrder_detail() + "</font>";
+                        status = "Status: <font color=\"red\">" + selectedOrder.getState() + "</font>";
+                        tvType.setText(Html.fromHtml(type), TextView.BufferType.SPANNABLE);
+                        tvDetail.setText(Html.fromHtml(description), TextView.BufferType.SPANNABLE);
+                        tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);
+                    }
+                    //----------end------------------setting order info
+
                     builderInner.setPositiveButton("Confirmed", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog,int which) {
-                            dialog.dismiss();
+                        public void onClick(final DialogInterface dialog, int which) {
+
+                            //Confirm assigning to the selected driver
+                            Map<String, Object> orderUpdate = new HashMap<String, Object>();
+                            orderUpdate.put("order/"+selectedOrder.getOrderUid()+"/state", "processing");
+                            orderUpdate.put("order/"+selectedOrder.getOrderUid()+"/driverUID", selectedDriver.getAccountUID());
+                            mDatabaseRef.updateChildren(orderUpdate, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    if (databaseError == null) {
+                                        Toast.makeText(DispatcherNewOrdersActivity.this, "Order assigned", Toast.LENGTH_LONG).show();
+                                        //move the order from new list to in-progress list
+                                        selectedOrder.setDriverUID(selectedDriver.getAccountUID());
+                                        selectedOrder.setState("processing");
+                                        newOrder_list.remove(selectedOrder);
+                                        inProgress_list.add(selectedOrder);
+                                        new_ordersAdapter.notifyDataSetChanged();
+                                        inprogress_orderAdapter.notifyDataSetChanged();
+                                        outdia.dismiss();
+                                        dialog.dismiss();
+                                    }else {
+                                        Toast.makeText(DispatcherNewOrdersActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
                         }
                     });
                     builderInner.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            outdia.dismiss();
                             dialog.dismiss();
+
                         }
                     });
                     builderInner.create().show();
 
                 }
             });
-
             builderSingle.setNegativeButton("Close", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -386,7 +466,10 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
 
                 }
             });*/
-            builderSingle.show();
+            outdia = builderSingle.create();
+            outdia.show();
+
+
         }
     }
 }
