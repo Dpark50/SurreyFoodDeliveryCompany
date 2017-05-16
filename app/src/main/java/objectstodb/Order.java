@@ -1,5 +1,6 @@
 package objectstodb;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
@@ -261,5 +262,17 @@ public class Order {
 
     public void setTimestampCreated(HashMap<String, Object> timestampCreated) {
         this.timestampCreated = timestampCreated;
+    }
+
+    @Exclude
+    public long getDateCreatedLong() {
+        Object o = timestampCreated.get("timestamp");
+        if( o instanceof Long)
+            return (Long)(o);
+        if( o instanceof Double)
+            return ((Double) o).longValue();
+        return (long)(o);
+
+
     }
 }
