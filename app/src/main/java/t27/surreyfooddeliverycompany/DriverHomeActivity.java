@@ -31,7 +31,7 @@ public class DriverHomeActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         accountUID = user.getUid();
-        
+
         Query queryOrders = mDatabaseRef.child("order").orderByChild("driverUID")
                 .equalTo(accountUID);
 

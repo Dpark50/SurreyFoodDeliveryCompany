@@ -1,5 +1,6 @@
 package objectstodb;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
@@ -230,31 +231,6 @@ public class Order {
         this.driverUID = driverUID;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderUid='" + orderUid + '\'' +
-                ", notification_user_token='" + notification_user_token + '\'' +
-                ", orderType='" + orderType + '\'' +
-                ", drop_cust_name='" + drop_cust_name + '\'' +
-                ", drop_phone='" + drop_phone + '\'' +
-                ", drop_address='" + drop_address + '\'' +
-                ", order_detail='" + order_detail + '\'' +
-                ", payment_method='" + payment_method + '\'' +
-                ", state='" + state + '\'' +
-                ", dropoff_address_detail='" + dropoff_address_detail + '\'' +
-                ", dropoff_email='" + dropoff_email + '\'' +
-                ", cust_total='" + cust_total + '\'' +
-                ", rest_name='" + rest_name + '\'' +
-                ", rest_phone='" + rest_phone + '\'' +
-                ", rest_email='" + rest_email + '\'' +
-                ", rest_address='" + rest_address + '\'' +
-                ", rest_ready_min='" + rest_ready_min + '\'' +
-                ", driverUID='" + driverUID + '\'' +
-                ", timestampCreated=" + timestampCreated +
-                '}';
-    }
-
     public HashMap<String, Object> getTimestampCreated() {
         return timestampCreated;
     }
@@ -289,5 +265,16 @@ public class Order {
                 "\nOrder details: " + order_detail +
                 "\nPayment method: " + payment_method +
                 "\nOrder Status: " + state;
+    }
+
+    @Exclude
+    public long getDateCreatedLong() {
+        Object o = timestampCreated.get("timestamp");
+        if( o instanceof Long)
+            return (Long)(o);
+        if( o instanceof Double)
+            return ((Double) o).longValue();
+        return (long)(o);
+
     }
 }

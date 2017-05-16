@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
     private void signInEmployee(final String loginType) {
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
+        final String cur_email = user.getEmail();
         //Query to add one employee
         Query accountQuery = mDatabase.child(loginType).child(accountUID);
 
@@ -122,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 prefsEditor.putString("accountUID", accountUID);
                 prefsEditor.putString("userObject", json);
                 prefsEditor.putString("loginType", loginType);
+                prefsEditor.putString("curEmail",cur_email);
                 prefsEditor.apply();
 
                 if (account.getAccountType().compareTo(loginType) == 0) {
