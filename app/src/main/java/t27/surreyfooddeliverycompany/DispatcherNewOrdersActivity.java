@@ -387,7 +387,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
 
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.first_popup_in_new_order_tab, null);
+        View dialogView = inflater.inflate(R.layout.new_order_dialog, null);
         builderSingle.setView(dialogView);
         TextView tvTitle = (TextView) dialogView.findViewById(R.id.first_popup_tv);
         String title_for_popup = "Create new order:";
@@ -412,7 +412,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                 }
 
                 //TODO - implement new order dialog here
-                Toast.makeText(DispatcherNewOrdersActivity.this, "New order added.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DispatcherNewOrdersActivity.this, "New order added. (not working yet)", Toast.LENGTH_SHORT).show();
 
             }
         });
