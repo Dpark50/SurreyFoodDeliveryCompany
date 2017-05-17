@@ -171,6 +171,7 @@ public class LoginActivity extends AppCompatActivity {
 
         database.child(loginType).child(accountUID).child("status").setValue("online");
         database.child(loginType).child(accountUID).child("idle").setValue("idle");
+        database.child(loginType).child(accountUID).child("nofToken").setValue(FirebaseInstanceId.getInstance().getToken());
     }
 
     private void loginRedirect() {

@@ -40,6 +40,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
 
             if(type!=null&&type.equals("driver")) {
+                if(payload.get("message")!=null&&payload.get("message").equals("taken")) {
+                    mBuilder.setContentTitle("You account is logged by others.");
+                    mBuilder.setContentText("NO notification. Login again to get notifications.");
+                } else {
+                    mBuilder.setContentTitle("New Order Assigned.   Payment method: " + payload.get("paym"));
+                    mBuilder.setContentText("To: " + payload.get("address"));
+                }
                 //for driver
                 Intent intent = new Intent(this, DriverHomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -49,22 +56,32 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
                 mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-                mBuilder.setContentTitle("New Order Assigned.   Payment method: " + payload.get("paym"));
-                mBuilder.setContentText("To: " + payload.get("address"))
-                        .setAutoCancel(true)
+
+                        mBuilder.setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
             } else {
+                //dispatcher
+
+                if(payload.get("orderstate").equals("p")) {
+                    mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                    mBuilder.setContentTitle("New order.   Type:" + payload.get("orderType"));
+                    mBuilder.setContentText("Order detail: "+ payload.get("content"));
+                } else if(payload.get("orderstate").equals("f")) {
+                    mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                    mBuilder.setContentTitle("Order is delivered.");
+                    mBuilder.setContentText("Order detail: "+ payload.get("content"));
+                } else {
+                    return;
+                }
                 Intent intent = new Intent(this, DispatcherNewOrdersActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                         PendingIntent.FLAG_ONE_SHOT);
 
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-                mBuilder.setContentTitle("From" + payload.get("ema"));
-                mBuilder.setContentText(payload.get("content") + ".Token: " + payload.get("token"))
-                        .setAutoCancel(true)
+
+                        mBuilder.setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
             }
