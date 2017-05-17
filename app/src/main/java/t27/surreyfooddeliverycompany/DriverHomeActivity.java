@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,8 +59,10 @@ public class DriverHomeActivity extends AppCompatActivity {
 
                 if (order.getState().compareTo("processing") == 0 ||
                         order.getState().compareTo("delivering") == 0) {
+                    String orderStatus = "Order Status: <font color=\"blue\">" +
+                            order.getState() + "</font>";
                     text.setText(order.orderDetail());
-                    statusText.setText("Order Status: " + order.getState());
+                    statusText.setText(Html.fromHtml(orderStatus), TextView.BufferType.SPANNABLE);
                     uidText.setText("Order UID: " + order.getOrderUid());
                 }
             }
@@ -128,7 +131,8 @@ public class DriverHomeActivity extends AppCompatActivity {
         mDatabaseRef.child("order").child(orderUid).child("state").setValue("finished");
 
         // Append to driverUID to detect changes
-        mDatabaseRef.child("order").child(orderUid).child("driverUID").setValue(accountUID + " (Finished)");
+        mDatabaseRef.child("order").child(orderUid).child("driverUID").setValue(accountUID +
+                " (Finished)");
         alert.dismiss();
     }
 }

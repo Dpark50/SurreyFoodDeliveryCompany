@@ -268,8 +268,7 @@ public class Order {
                     "\nCustomer's address: " + drop_address +
                     "\nOrder details: " + order_detail +
                     "\nTotal amount: " + cust_total +
-                    "\nPayment method: " + payment_method +
-                    "\nOrder Status: " + state;
+                    "\nPayment method: " + payment_method;
         }
 
         // Customer's order
@@ -289,11 +288,11 @@ public class Order {
     @Exclude
     public long getDateCreatedLong() {
         Object o = timestampCreated.get("timestamp");
+
         if( o instanceof Long)
             return (Long)(o);
         if( o instanceof Double)
             return ((Double) o).longValue();
         return (long)(o);
-
     }
 }
