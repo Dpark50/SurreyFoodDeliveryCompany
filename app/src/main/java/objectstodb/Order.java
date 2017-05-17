@@ -33,6 +33,10 @@ public class Order {
     private String payment_method;
     private String state;
 
+    private String email_Account;
+    private String guest_notiToken;
+
+
     //customer additional
     private String dropoff_address_detail;
     private String dropoff_email;
@@ -84,6 +88,22 @@ public class Order {
         HashMap<String, Object> timestampNow = new HashMap<>();
         timestampNow.put("timestamp", ServerValue.TIMESTAMP);
         this.timestampCreated = timestampNow;
+    }
+
+    public String getGuest_notiToken() {
+        return guest_notiToken;
+    }
+
+    public void setGuest_notiToken(String guest_notiToken) {
+        this.guest_notiToken = guest_notiToken;
+    }
+
+    public String getEmail_Account() {
+        return email_Account;
+    }
+
+    public void setEmail_Account(String email_Account) {
+        this.email_Account = email_Account;
     }
 
 

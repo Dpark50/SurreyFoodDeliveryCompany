@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import objectstodb.Account;
 
@@ -169,6 +170,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                                         phone,
                                         address,
                                         accountUID);
+                                addedAccount.setNofToken(FirebaseInstanceId.getInstance().getToken());
 
                                 //add one employee to different db table
                                 mDatabaseRef.child(tableName).child(accountUID).setValue(addedAccount);
