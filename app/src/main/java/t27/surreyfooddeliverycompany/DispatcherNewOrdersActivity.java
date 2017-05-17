@@ -382,6 +382,46 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    public void newOrderButton(View view) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.first_popup_in_new_order_tab, null);
+        builderSingle.setView(dialogView);
+        TextView tvTitle = (TextView) dialogView.findViewById(R.id.first_popup_tv);
+        String title_for_popup = "Create new order:";
+        tvTitle.setText(title_for_popup);
+
+
+        builderSingle.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+
+                if(!CheckConnection.isOnline(DispatcherNewOrdersActivity.this)) {
+                    Toast.makeText(DispatcherNewOrdersActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    return;
+                }
+
+                //TODO - implement new order dialog here
+                Toast.makeText(DispatcherNewOrdersActivity.this, "New order added.", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        builderSingle.show();
+
+
+    }
+
     private void sortList(ArrayList<Order> order_list) {
         Collections.sort(order_list, new Comparator<Order>() {
             @Override
@@ -528,14 +568,14 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
 
                         }
                     });
-                    builderInner.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            outdia.dismiss();
-                            dialog.dismiss();
-
-                        }
-                    });
+//                    builderInner.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            outdia.dismiss();
+//                            dialog.dismiss();
+//
+//                        }
+//                    });
                     builderInner.create().show();
 
                 }
