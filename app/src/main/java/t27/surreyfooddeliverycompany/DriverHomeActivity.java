@@ -1,12 +1,15 @@
 package t27.surreyfooddeliverycompany;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,10 +23,17 @@ import com.google.firebase.database.Query;
 
 import objectstodb.Order;
 
+import static t27.surreyfooddeliverycompany.R.id.uid;
+
 public class DriverHomeActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private ListView listview;
     private String accountUID;
+    private AlertDialog alert;
+    private Button accept;
+    private Button complete;
+    private String orderStatus;
+    private String orderUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +48,39 @@ public class DriverHomeActivity extends AppCompatActivity {
         Query queryOrders = mDatabaseRef.child("order").orderByChild("driverUID")
                 .equalTo(accountUID);
 
-        FirebaseListAdapter<Order> adapter = new FirebaseListAdapter<Order>(
+        final FirebaseListAdapter<Order> adapter = new FirebaseListAdapter<Order>(
                 DriverHomeActivity.this, Order.class,
                 R.layout.drivers_order__list, queryOrders) {
             @Override
             protected void populateView(View view, Order order, int i) {
                 TextView text = (TextView) view.findViewById(R.id.order);
-                text.setText(order.orderDetail());
+                TextView statusText = (TextView) view.findViewById(R.id.order_status);
+                TextView uidText = (TextView) view.findViewById(uid);
+
+                if (order.getState().compareTo("processing") == 0 ||
+                        order.getState().compareTo("delivering") == 0) {
+                    text.setText(order.orderDetail());
+                    statusText.setText("Order Status: " + order.getState());
+                    uidText.setText("Order UID: " + order.getOrderUid());
+                }
             }
         };
-
         listview.setAdapter(adapter);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textviewStatus = (TextView) view.findViewById(R.id.order_status);
+                TextView textviewUid = (TextView) view.findViewById(uid);
+                String status = textviewStatus.getText().toString();
+                String uid = textviewUid.getText().toString();
+
+                // Parse textview string to order state
+                orderStatus = status.substring(14);
+
+                // Parse textview string to uid
+                orderUid = uid.substring(11);
+
                 showDialog();
             }
         });
@@ -64,15 +93,39 @@ public class DriverHomeActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         TextView title = (TextView) dialogView.findViewById(R.id.title);
+        accept = (Button) dialogView.findViewById(R.id.order_accept);
+        complete = (Button) dialogView.findViewById(R.id.order_complete);
         String dialogTitle = "Order Status";
         title.setText(dialogTitle);
 
-        AlertDialog alert = builder.create();
+        if (orderStatus.compareTo("delivering") == 0) {
+            accept.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            accept.setTextColor(Color.GRAY);
+            accept.setEnabled(false);
+            complete.getBackground().setColorFilter(null);
+            complete.setEnabled(true);
+        } else {
+            complete.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            complete.setTextColor(Color.GRAY);
+            complete.setEnabled(false);
+        }
+
+        alert = builder.create();
         alert.show();
     }
 
     public void profile(View view) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
+    }
+
+    public void accept(View view) {
+        mDatabaseRef.child("order").child(orderUid).child("state").setValue("delivering");
+        alert.dismiss();
+    }
+
+    public void complete(View view) {
+        mDatabaseRef.child("order").child(orderUid).child("state").setValue("finished");
+        alert.dismiss();
     }
 }
