@@ -263,8 +263,7 @@ public class Order {
                 "\nCustomer's phone number: " + drop_phone +
                 "\nCustomer's address: " + drop_address +
                 "\nOrder details: " + order_detail +
-                "\nPayment method: " + payment_method +
-                "\nOrder Status: " + state;
+                "\nPayment method: " + payment_method;
     }
 
     @Exclude
