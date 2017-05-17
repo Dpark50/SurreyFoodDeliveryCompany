@@ -15,6 +15,10 @@ public class Account {
     private String status;
     private String idle;
     private String nofToken;
+
+
+
+    private String accountUID;
     //
 
 
@@ -27,7 +31,7 @@ public class Account {
     private String address;
     private HashMap<String, Object> timestampCreated;
 
-    public Account(String status, String idle, String accountType, String email, String password, String name, String number, String address) {
+    public Account(String status, String idle, String accountType, String email, String password, String name, String number, String address,String accountUID) {
         this.status = status;
         this.idle = idle;
         this.accountType = accountType;
@@ -39,6 +43,7 @@ public class Account {
         HashMap<String, Object> timestampNow = new HashMap<>();
         timestampNow.put("timestamp", ServerValue.TIMESTAMP);
         this.timestampCreated = timestampNow;
+        this.accountUID = accountUID;
     }
 
 
@@ -123,6 +128,14 @@ public class Account {
 
     public void setTimestampCreated(HashMap<String, Object> timestampCreated) {
         this.timestampCreated = timestampCreated;
+    }
+
+    public String getAccountUID() {
+        return accountUID;
+    }
+
+    public void setAccountUID(String accountUID) {
+        this.accountUID = accountUID;
     }
 
 

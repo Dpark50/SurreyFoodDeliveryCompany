@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:id="@+id/inprogress_btn">
 
+
+
         <TextView
             android:id="@+id/inprogress_title"
             android:layout_width="match_parent"
@@ -16,9 +18,10 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
+        <ListView
+            android:id="@+id/inprogress_order_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="no"/>
+            android:layout_height="match_parent"
+            android:layout_below="@id/inprogress_title" />
 
 </LinearLayout>

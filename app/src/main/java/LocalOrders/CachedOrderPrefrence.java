@@ -11,6 +11,7 @@ import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import objectstodb.Order;
@@ -31,11 +32,8 @@ public class CachedOrderPrefrence {
         return ApplicationContext.getSharedPreferences(email, Context.MODE_PRIVATE);
     }
 
-    /*
-    * Save the order locally under the email account
-    * */
-    public static void saveOrderToAppByEmail(Context ApplicationContext,String email, Order newone) {
-        ArrayList<Order> orders_al;
+    public static void saveOrderMapToAppByEmail(Context ApplicationContext,String email, HashMap<String,Order> newones) {
+        HashMap<String,Order> orders_al;
 
         SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
         String orders_js = sp.getString("orders", null);
@@ -43,14 +41,14 @@ public class CachedOrderPrefrence {
 
         //first time
         if (orders_js == null) {
-            orders_al = new ArrayList<Order>();
+            orders_al = new HashMap<String,Order>();
         } else {
             //not first time
-            orders_al = gson.fromJson(orders_js, new TypeToken<ArrayList<Order>>() {
+            orders_al = gson.fromJson(orders_js, new TypeToken<HashMap<String,Order>>() {
             }.getType());
         }
 
-        orders_al.add(newone);
+        orders_al.putAll(newones);
 
 
 
@@ -60,7 +58,87 @@ public class CachedOrderPrefrence {
         prefsEditor.apply();
     }
 
-    public static boolean updateOrderByEmail(Context ApplicationContext,String email,Order newone) {
+    /*
+    * Save the order locally under the email account
+    * */
+    public static void saveOrderToAppByEmail(Context ApplicationContext,String email, Order newone) {
+        HashMap<String,Order> orders_al;
+
+        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
+        String orders_js = sp.getString("orders", null);
+        Gson gson = new Gson();
+
+        //first time
+        if (orders_js == null) {
+            orders_al = new HashMap<String,Order>();
+        } else {
+            //not first time
+            orders_al = gson.fromJson(orders_js, new TypeToken<HashMap<String,Order>>() {
+            }.getType());
+        }
+
+        orders_al.put(newone.getOrderUid(),newone);
+
+
+
+        SharedPreferences.Editor prefsEditor = sp.edit();
+        String newjson = gson.toJson(orders_al);
+        prefsEditor.putString("orders", newjson);
+        prefsEditor.apply();
+    }
+
+
+
+    /*
+    * get order arraylist of the email account from SharedPreference
+    * */
+    public static HashMap<String,Order> getOrderByEmail(Context ApplicationContext,String email) {
+        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
+        String orders_js = sp.getString("orders",null);
+        Gson gson = new Gson();
+
+        HashMap<String,Order> orders_al = gson.fromJson(orders_js, new TypeToken<HashMap<String,Order>>() {
+        }.getType());
+
+        if(orders_al == null) {
+            orders_al = new HashMap<String,Order>();
+        }
+
+        return orders_al;
+    }
+
+    //return true when it removes
+    //return false when it fails
+    public static boolean removeOrderByEmail(Context ApplicationContext,String email, Order removeone) {
+        HashMap<String,Order> orders_al;
+
+        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
+        String orders_js = sp.getString("orders", null);
+        Gson gson = new Gson();
+        if(orders_js == null)
+            return false;
+
+        orders_al = gson.fromJson(orders_js, new TypeToken<HashMap<String,Order>>() {
+        }.getType());
+        if(orders_al.containsKey(removeone.getOrderUid())) {
+            orders_al.remove(removeone.getOrderUid());
+            //put the object back
+            SharedPreferences.Editor prefsEditor = sp.edit();
+            String newjson = gson.toJson(orders_al);
+            prefsEditor.putString("orders", newjson);
+            prefsEditor.apply();
+            return true;
+        }
+        return false;
+
+    }
+
+    public static String getOrdersJs(Context ApplicationContext,String email) {
+        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
+        return sp.getString("orders",null);
+    }
+
+    /*    public static boolean updateOrderByEmail(Context ApplicationContext,String email,Order newone) {
         ArrayList<Order> orders_al;
 
         SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext, email);
@@ -88,56 +166,7 @@ public class CachedOrderPrefrence {
 
 
 
-    }
-
-    /*
-    * get order arraylist of the email account from SharedPreference
-    * */
-    public static ArrayList<Order> getOrderByEmail(Context ApplicationContext,String email) {
-        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
-        String orders_js = sp.getString("orders",null);
-        Gson gson = new Gson();
-
-        ArrayList<Order> orders_al = gson.fromJson(orders_js, new TypeToken<ArrayList<Order>>() {
-        }.getType());
-
-        if(orders_al == null) {
-            orders_al = new ArrayList<Order>();
-        }
-
-        return orders_al;
-    }
-
-    //return true when it removes
-    //return false when it fails
-    public static boolean romoveOrderByEmail(Context ApplicationContext,String email, Order removeone) {
-        ArrayList<Order> orders_al;
-
-        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
-        String orders_js = sp.getString("orders", null);
-        Gson gson = new Gson();
-        if(orders_js == null)
-            return false;
-
-        orders_al = gson.fromJson(orders_js, new TypeToken<ArrayList<Order>>() {
-        }.getType());
-        if(orders_al.contains(removeone)) {
-            orders_al.remove(removeone);
-            //put the object back
-            SharedPreferences.Editor prefsEditor = sp.edit();
-            String newjson = gson.toJson(orders_al);
-            prefsEditor.putString("orders", newjson);
-            prefsEditor.apply();
-            return true;
-        }
-        return false;
-
-    }
-
-    public static String getOrdersJs(Context ApplicationContext,String email) {
-        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
-        return sp.getString("orders",null);
-    }
+    }*/
 
 }
 

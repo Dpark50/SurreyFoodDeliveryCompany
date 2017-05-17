@@ -1,5 +1,6 @@
 package objectstodb;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
@@ -31,6 +32,10 @@ public class Order {
     private String order_detail;
     private String payment_method;
     private String state;
+
+    private String email_Account;
+    private String guest_notiToken;
+
 
     //customer additional
     private String dropoff_address_detail;
@@ -83,6 +88,22 @@ public class Order {
         HashMap<String, Object> timestampNow = new HashMap<>();
         timestampNow.put("timestamp", ServerValue.TIMESTAMP);
         this.timestampCreated = timestampNow;
+    }
+
+    public String getGuest_notiToken() {
+        return guest_notiToken;
+    }
+
+    public void setGuest_notiToken(String guest_notiToken) {
+        this.guest_notiToken = guest_notiToken;
+    }
+
+    public String getEmail_Account() {
+        return email_Account;
+    }
+
+    public void setEmail_Account(String email_Account) {
+        this.email_Account = email_Account;
     }
 
 
@@ -230,36 +251,49 @@ public class Order {
         this.driverUID = driverUID;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderUid='" + orderUid + '\'' +
-                ", notification_user_token='" + notification_user_token + '\'' +
-                ", orderType='" + orderType + '\'' +
-                ", drop_cust_name='" + drop_cust_name + '\'' +
-                ", drop_phone='" + drop_phone + '\'' +
-                ", drop_address='" + drop_address + '\'' +
-                ", order_detail='" + order_detail + '\'' +
-                ", payment_method='" + payment_method + '\'' +
-                ", state='" + state + '\'' +
-                ", dropoff_address_detail='" + dropoff_address_detail + '\'' +
-                ", dropoff_email='" + dropoff_email + '\'' +
-                ", cust_total='" + cust_total + '\'' +
-                ", rest_name='" + rest_name + '\'' +
-                ", rest_phone='" + rest_phone + '\'' +
-                ", rest_email='" + rest_email + '\'' +
-                ", rest_address='" + rest_address + '\'' +
-                ", rest_ready_min='" + rest_ready_min + '\'' +
-                ", driverUID='" + driverUID + '\'' +
-                ", timestampCreated=" + timestampCreated +
-                '}';
-    }
-
     public HashMap<String, Object> getTimestampCreated() {
         return timestampCreated;
     }
 
     public void setTimestampCreated(HashMap<String, Object> timestampCreated) {
         this.timestampCreated = timestampCreated;
+    }
+
+    public String orderDetail() {
+        if (orderType.compareTo("customer") == 0 || orderType.compareTo("Customer") == 0) {
+            // Restaurant's order
+            return "Order type: " + orderType +
+                    "\nCustomer: " + drop_cust_name +
+                    "\nCustomer's phone number: " + drop_phone +
+                    "\nCustomer's address: " + drop_address +
+                    "\nOrder details: " + order_detail +
+                    "\nTotal amount: " + cust_total +
+                    "\nPayment method: " + payment_method +
+                    "\nOrder Status: " + state;
+        }
+
+        // Customer's order
+        return "Order type: " + orderType +
+                "\nRestaurant: " + rest_name +
+                "\nRestaurant's phone number: " + rest_phone +
+                "\nRestaurant's address: " + rest_address +
+                "\nReady in: " + rest_ready_min + " min" +
+                "\nTotal amount: " + cust_total +
+                "\nCustomer: " + drop_cust_name +
+                "\nCustomer's phone number: " + drop_phone +
+                "\nCustomer's address: " + drop_address +
+                "\nOrder details: " + order_detail +
+                "\nPayment method: " + payment_method;
+    }
+
+    @Exclude
+    public long getDateCreatedLong() {
+        Object o = timestampCreated.get("timestamp");
+        if( o instanceof Long)
+            return (Long)(o);
+        if( o instanceof Double)
+            return ((Double) o).longValue();
+        return (long)(o);
+
     }
 }

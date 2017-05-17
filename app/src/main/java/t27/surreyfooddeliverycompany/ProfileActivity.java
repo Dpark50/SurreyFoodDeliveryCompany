@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import objectstodb.Account;
@@ -54,13 +56,27 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         SharedPreferences preferences = getSharedPreferences(getString(
                 R.string.user_preference), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
 
-        database.child("driver").child(accountUID).child("status").setValue("offline");
-        database.child("driver").child(accountUID).child("idle").setValue("idle");
+        String type = preferences.getString("loginType","");
+        Log.d("profileAct", "signOut: type" + type);;
+
+
+        if(type.equals("driver")) {
+            database.child("driver").child(accountUID).child("status").setValue("offline");
+            database.child("driver").child(accountUID).child("idle").setValue("idle");
+        } /*else if(type.equals("dispatcher")) {
+            //the notifi token
+            String tok = FirebaseInstanceId
+                    .getInstance().getToken();
+            database.child("dispatch_token").child(tok).removeValue();
+            Log.d("profileAct", "signOut: token:" + tok);
+        }*/
+        SharedPreferences.Editor editor = preferences.edit();
+
         mAuth.signOut();
         editor.clear();
         editor.apply();

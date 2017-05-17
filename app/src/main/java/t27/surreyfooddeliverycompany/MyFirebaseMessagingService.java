@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
@@ -28,22 +29,45 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.v(TAG, "From: " + remoteMessage.getFrom());
 
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(
+                getString(R.string.user_preference), Context.MODE_PRIVATE);
+        String type = preferences.getString("loginType", null);
+
         if(remoteMessage.getData().size() > 0){
+
             Map<String, String> payload = remoteMessage.getData();
             Log.v(TAG, "Message data payload: " + remoteMessage.getData());
-            Intent intent = new Intent(this, DispatcherNewOrdersActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                    PendingIntent.FLAG_ONE_SHOT);
-
-            Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-            mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-            mBuilder.setContentTitle("From"+payload.get("ema"));
-            mBuilder.setContentText(payload.get("content")+ ".Token: " + payload.get("token"))
-                    .setAutoCancel(true)
-                    .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent);
+
+            if(type!=null&&type.equals("driver")) {
+                //for driver
+                Intent intent = new Intent(this, DriverHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+
+                Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                mBuilder.setContentTitle("New Order Assigned.   Payment method: " + payload.get("paym"));
+                mBuilder.setContentText("To: " + payload.get("address"))
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+            } else {
+                Intent intent = new Intent(this, DispatcherNewOrdersActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                mBuilder.setContentTitle("From" + payload.get("ema"));
+                mBuilder.setContentText(payload.get("content") + ".Token: " + payload.get("token"))
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+            }
 
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
