@@ -34,8 +34,6 @@ public class DriverHomeActivity extends AppCompatActivity {
     private Button complete;
     private String orderStatus;
     private String orderUid;
-    private Boolean orderCompleted;
-    FirebaseListAdapter<Order> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +44,10 @@ public class DriverHomeActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         accountUID = user.getUid();
-        orderCompleted = false;
         Query queryOrders = mDatabaseRef.child("order").orderByChild("driverUID")
                 .equalTo(accountUID);
 
-        adapter = new FirebaseListAdapter<Order>(
+        FirebaseListAdapter<Order> adapter = new FirebaseListAdapter<Order>(
                 DriverHomeActivity.this, Order.class,
                 R.layout.drivers_order__list, queryOrders) {
             @Override
@@ -90,7 +87,6 @@ public class DriverHomeActivity extends AppCompatActivity {
     }
 
     private void displayDialog() {
-        final Boolean completedOrder = false;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.order_completion, null);
