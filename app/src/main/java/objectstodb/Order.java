@@ -3,6 +3,8 @@ package objectstodb;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -294,5 +296,11 @@ public class Order {
         if( o instanceof Double)
             return ((Double) o).longValue();
         return (long)(o);
+    }
+
+    public String getTimeStamp() {
+        Date date = new Date(getDateCreatedLong());
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM d, hh:mm aaa");
+        return format.format(date);
     }
 }

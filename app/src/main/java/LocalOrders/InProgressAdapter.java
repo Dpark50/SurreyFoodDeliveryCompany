@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import objectstodb.Order;
-import t27.surreyfooddeliverycompany.R;
 
 /**
  * Created by Kent on 2017-05-15.
@@ -56,7 +55,8 @@ public class InProgressAdapter extends ArrayAdapter<Order> {
         if (order != null) {
             type  = "Order Type: <font color=\"red\">"+order.getOrderType() + "</font>";
             description= "Order Detail: <font color=\"red\">"+order.getOrder_detail() + "</font>";
-            status = "Status: <font color=\"red\">" + order.getState() + "</font>";
+            status = "Status: <font color=\"red\">" + order.getState() + "</font><br>" +
+                    order.getTimeStamp();
             tvType.setText(Html.fromHtml(type), TextView.BufferType.SPANNABLE);
             tvDetail.setText(Html.fromHtml(description), TextView.BufferType.SPANNABLE);
             tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);

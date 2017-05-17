@@ -482,9 +482,12 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                     String status;
                     String type;
                     if (selectedOrder != null) {
-                        type  = "Order Type: <font color=\"red\">"+selectedOrder.getOrderType() + "</font>";
-                        description= "Order Detail: <font color=\"red\">"+selectedOrder.getOrder_detail() + "</font>";
-                        status = "Status: <font color=\"red\">" + selectedOrder.getState() + "</font>";
+                        type  = "Order Type: <font color=\"red\">"+selectedOrder.getOrderType() +
+                                "</font>";
+                        description= "Order Detail: <font color=\"red\">" +
+                                selectedOrder.getOrder_detail() + "</font>";
+                        status = "Status: <font color=\"red\">" + selectedOrder.getState() +
+                                "</font>";
                         tvType.setText(Html.fromHtml(type), TextView.BufferType.SPANNABLE);
                         tvDetail.setText(Html.fromHtml(description), TextView.BufferType.SPANNABLE);
                         tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);

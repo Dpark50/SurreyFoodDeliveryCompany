@@ -63,7 +63,8 @@ public class DriverHomeActivity extends AppCompatActivity {
                             order.getState() + "</font>";
                     text.setText(order.orderDetail());
                     statusText.setText(Html.fromHtml(orderStatus), TextView.BufferType.SPANNABLE);
-                    uidText.setText("Order UID: " + order.getOrderUid());
+                    uidText.setText("Order UID: " + order.getOrderUid() + "\n" +
+                            order.getTimeStamp());
                 }
             }
         };
