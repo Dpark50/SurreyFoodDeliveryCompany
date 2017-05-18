@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -128,7 +129,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         setProfileInfo();
 
         //new order page and in-progress page
-
         map_uid_to_order = new HashMap<String,Order>();
         initialOrdersLoad = false;
 
@@ -151,10 +151,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                     new_ordersAdapter.notifyDataSetChanged();
 
                     childAddedListener = this;
-
-
                 }
-
             }
 
             @Override
@@ -180,7 +177,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                             break;
                         }
                     }
-
                 } else if(changedState.equals("delivering")) {
                     Iterator<Order> it = inProgress_list.iterator();
                     while (it.hasNext()) {
@@ -190,7 +186,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                             break;
                         }
                     }
-
                 } else if(changedState.equals("finished")) {
                     Iterator<Order> it = inProgress_list.iterator();
                     while (it.hasNext()) {
@@ -200,14 +195,27 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                             break;
                         }
                     }
+                } else if(changedState.equals("confirmed")) {
+                    Iterator<Order> it = inProgress_list.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getOrderUid().equals(orderUID)) {
+                            Log.d("DispatcherAct", "onChildChanged: remove old item " +orderUID+"from inProgress_list" );
+                            it.remove();
+                            break;
+                        }
+                    }
+
+                    inprogress_orderAdapter.notifyDataSetChanged();
+                    return;
                 } else {
                     return;
                 }
+
                 inProgress_list.add(changeorder);
+
                 // Sorting
                 sortList(inProgress_list);
                 inprogress_orderAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -276,7 +284,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                         R.id.tvType,R.id.tvDetail,R.id.tvStatus);
                 neworderListView.setAdapter(new_ordersAdapter);
                 inprogressListView.setAdapter(inprogress_orderAdapter);
-                initialOrdersLoad  =true;
+                initialOrdersLoad = true;
                 neworderListView.setOnItemClickListener(new NewOrderItemOnClickListener());
 
             }
@@ -287,6 +295,8 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             }
         });
         //--------------end------get orders from db and merge them with local records
+
+        inprogressListView.setOnItemClickListener(new InProgressItemOnClickListener());
     }
 
     @Override
@@ -443,6 +453,25 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         //queryOrders.removeEventListener(childAddedListener);
     }
 
+    private Order order;
+    private AlertDialog alert;
+
+    private class InProgressItemOnClickListener implements  AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            order = (Order) parent.getItemAtPosition(position);
+            AlertDialog.Builder builder = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
+            LayoutInflater inflater = DispatcherNewOrdersActivity.this.getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.in_progress_order_dialog, null);
+            builder.setView(dialogView);
+
+            Button confirm = (Button) dialogView.findViewById(R.id.remove_order);
+            Button cancel = (Button) dialogView.findViewById(R.id.remove_cancel);
+            alert = builder.create();
+            alert.show();
+        }
+    }
+
     //onclick for new order items
     private class NewOrderItemOnClickListener implements AdapterView.OnItemClickListener {
         private Order selectedOrder;
@@ -474,7 +503,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             listDrivers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                   final Account selectedDriver = (Account)parent.getItemAtPosition(position);
+                    final Account selectedDriver = (Account)parent.getItemAtPosition(position);
 
                     final AlertDialog.Builder builderInner = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
                     //inner dialog layout
@@ -600,8 +629,16 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             });*/
             outdia = builderSingle.create();
             outdia.show();
-
-
         }
     }
+
+    public void confirm(View view) {
+        mDatabaseRef.child("order").child(order.getOrderUid()).child("state").setValue("confirmed");
+        alert.dismiss();
+    }
+
+    public void cancel(View view) {
+        alert.dismiss();
+    }
+
 }

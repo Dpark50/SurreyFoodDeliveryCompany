@@ -1,9 +1,7 @@
 package LocalOrders;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import objectstodb.Order;
 
@@ -27,7 +25,7 @@ public class newAndInProgressFun {
         ArrayList<Order> newOrders = new ArrayList<Order>();
 
         for (Order one : map.values()) {
-            if (!one.getState().equals("pending")) {
+            if (!one.getState().equals("pending") && !one.getState().equals("confirmed")) {
                 newOrders.add(one);
             }
         }
