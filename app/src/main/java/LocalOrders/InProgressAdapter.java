@@ -66,4 +66,12 @@ public class InProgressAdapter extends ArrayAdapter<Order> {
         // Return the completed view to render on screen
         return convertView;
     }
+
+    @Override
+    public boolean isEnabled(int position) {
+        Order order = getItem(position);
+        if (order.getState().equals("finished"))
+            return true;
+        return false;
+    }
 }
