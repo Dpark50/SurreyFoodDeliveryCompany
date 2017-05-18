@@ -41,34 +41,47 @@
     </LinearLayout>
 
 
-
-    <TextView
-        android:id="@+id/title"
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Account List"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/tab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Staff"
+            android:layout_alignParentRight="true"
+            android:onClick="changeView"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account List"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
     <!-- Body -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/footer"
-        android:layout_below="@id/title"
+        android:layout_below="@id/header"
+        android:id="@+id/body"
         android:layout_marginBottom="15dp"
         android:background="@drawable/back">
 
         <ListView
             android:id="@+id/addedAccount_listview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text=""
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
