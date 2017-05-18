@@ -63,11 +63,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             } else {
                 //dispatcher
 
-                if(payload.get("orderstate").equals("p")) {
+                if(payload.get("orderstate")!=null&&payload.get("orderstate").equals("p")) {
                     mBuilder.setSmallIcon(R.mipmap.ic_launcher);
                     mBuilder.setContentTitle("New order.   Type:" + payload.get("orderType"));
                     mBuilder.setContentText("Order detail: "+ payload.get("content"));
-                } else if(payload.get("orderstate").equals("f")) {
+                } else if(payload.get("orderstate")!=null&&payload.get("orderstate").equals("f")) {
                     mBuilder.setSmallIcon(R.mipmap.ic_launcher);
                     mBuilder.setContentTitle("Order is delivered.");
                     mBuilder.setContentText("Order detail: "+ payload.get("content"));

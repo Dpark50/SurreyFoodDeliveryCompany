@@ -74,6 +74,8 @@ public class DriverHomeActivity extends AppCompatActivity {
                             order.getTimeStamp());
                 }
             }
+
+
         };
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,6 +98,29 @@ public class DriverHomeActivity extends AppCompatActivity {
         });
 
         listview.setAdapter(adapter);
+
+        //location
+        Intent intent = new Intent(getApplicationContext(),LocationService.class);
+        intent.putExtra("uid",accountUID);
+        startService(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(getApplicationContext(),LocationService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 
     private void displayDialog() {

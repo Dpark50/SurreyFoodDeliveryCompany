@@ -1,5 +1,6 @@
 package t27.surreyfooddeliverycompany;
 
+import android.graphics.Camera;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -8,15 +9,33 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+
+import objectstodb.Account;
+import objectstodb.Order;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private boolean isInitmarker;
+    private HashMap<String,Marker> uidTOmaker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        uidTOmaker = new HashMap<>();
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -38,6 +57,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query locationRef = databaseReference.child("driver");
+
+        isInitmarker = false;
+        locationRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Account one = dataSnapshot.getValue(Account.class);
+                String oldUid = one.getAccountUID();
+                if(!uidTOmaker.containsKey(oldUid)) {
+                    return;
+                }
+                Double newLat = one.getLat();
+                Double newLng = one.getLng();
+                Marker marker = uidTOmaker.get(oldUid);
+                if(newLat.compareTo(marker.getPosition().latitude) !=0 ||
+                        newLng.compareTo(marker.getPosition().longitude) !=0){
+                    marker.setPosition(new LatLng(newLat,newLng));
+
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<HashMap<String,Account>> type_drivers_list =
+                        new GenericTypeIndicator<HashMap<String,Account>>() {};
+                HashMap<String,Account> driversmap = dataSnapshot.getValue(type_drivers_list);
+                for(Account one:driversmap.values()) {
+                    LatLng pos = new LatLng(one.getLat(),one.getLng());
+                    if(one.getLat()!=null&&one.getLng()!=null) {
+                        MarkerOptions mo = new MarkerOptions().position(pos)
+                                                                .title(one.getName());
+                        Marker oneMarker = mMap.addMarker(mo);
+                        uidTOmaker.put(one.getAccountUID(),oneMarker);
+
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
+
+                }
+
+                isInitmarker = true;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
