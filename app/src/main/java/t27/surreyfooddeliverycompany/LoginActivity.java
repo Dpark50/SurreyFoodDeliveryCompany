@@ -44,7 +44,15 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences userPreferences;
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginRedirect();
@@ -149,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                 prefsEditor.putString("curEmail",cur_email);
                 prefsEditor.apply();
 
-                if (account.getAccountType().compareTo(loginType) == 0) {
+                if (account.getAccountType()!=null&&account.getAccountType().compareTo(loginType) == 0) {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent
                             .FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
