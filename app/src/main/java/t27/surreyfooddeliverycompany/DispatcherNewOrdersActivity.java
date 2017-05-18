@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -59,7 +58,8 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private TextView address;
     private TextView email;
     private TextView phoneNumber;
-
+    private Order order;
+    private AlertDialog alert;
 
     //all the order records grabbed from db when this activity is loaded the first time
     private List<Order> orders_list;
@@ -453,9 +453,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         //queryOrders.removeEventListener(childAddedListener);
     }
 
-    private Order order;
-    private AlertDialog alert;
-
     private class InProgressItemOnClickListener implements  AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -465,8 +462,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
             final View dialogView = inflater.inflate(R.layout.in_progress_order_dialog, null);
             builder.setView(dialogView);
 
-            Button confirm = (Button) dialogView.findViewById(R.id.remove_order);
-            Button cancel = (Button) dialogView.findViewById(R.id.remove_cancel);
             alert = builder.create();
             alert.show();
         }
