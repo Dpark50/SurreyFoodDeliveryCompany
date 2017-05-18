@@ -67,7 +67,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(type.equals("driver")) {
             database.child("driver").child(accountUID).child("status").setValue("offline");
-            database.child("driver").child(accountUID).child("idle").setValue("idle");
         } /*else if(type.equals("dispatcher")) {
             //the notifi token
             String tok = FirebaseInstanceId

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,9 +19,15 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import objectstodb.Order;
 
@@ -72,16 +79,17 @@ public class DriverHomeActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Order oneorder = (Order) parent.getItemAtPosition(position);
                 TextView textviewStatus = (TextView) view.findViewById(R.id.order_status);
                 TextView textviewUid = (TextView) view.findViewById(uid);
                 String status = textviewStatus.getText().toString();
                 String uid = textviewUid.getText().toString();
 
                 // Parse textview string to order state
-                orderStatus = status.substring(14);
+                orderStatus = oneorder.getState();
 
                 // Parse textview string to uid
-                orderUid = uid.substring(11);
+                orderUid = oneorder.getOrderUid();
 
                 displayDialog();
             }
@@ -124,16 +132,67 @@ public class DriverHomeActivity extends AppCompatActivity {
     }
 
     public void accept(View view) {
-        mDatabaseRef.child("order").child(orderUid).child("state").setValue("delivering");
+        DatabaseReference ref = mDatabaseRef.child("driver").child(accountUID).child("idle");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //get the number for the taken orders
+                String numofOrderstring = dataSnapshot.getValue(String.class);
+                long numoforders = Long.parseLong(numofOrderstring);
+                String numBack = String.valueOf(++numoforders);
+                Map<String, Object> driveraccUpdate = new HashMap<String, Object>();
+                //decrease taken order
+                String path1 = "driver/" + accountUID+"/idle";
+                driveraccUpdate.put(path1, numBack);
+
+
+                String path2 = "order/"+ orderUid+"/state";
+
+                //update the order to delivering
+                driveraccUpdate.put(path2,"delivering");
+
+                mDatabaseRef.updateChildren(driveraccUpdate);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("driverhomeAct", "onCancelled: " + "accpet wrong");
+            }
+        });
         alert.dismiss();
     }
 
     public void complete(View view) {
-        mDatabaseRef.child("order").child(orderUid).child("state").setValue("finished");
+        DatabaseReference ref = mDatabaseRef.child("driver").child(accountUID).child("idle");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        // Append to driverUID to detect changes
-        mDatabaseRef.child("order").child(orderUid).child("driverUID").setValue(accountUID +
-                " (Finished)");
+                //get the number for the taken orders
+                String numofOrderstring = dataSnapshot.getValue(String.class);
+                long numoforders = Long.parseLong(numofOrderstring);
+                String numBack = String.valueOf(--numoforders);
+                Map<String, Object> driveraccUpdate = new HashMap<String, Object>();
+                //decrease taken order
+                driveraccUpdate.put("driver/" + accountUID+"/" + "idle", numBack);
+                //update the order to delivering
+                driveraccUpdate.put("order/"+ orderUid+"/state","finished");
+
+                driveraccUpdate.put("order/" + orderUid+"/driverUID",accountUID + "_finished");
+
+                mDatabaseRef.updateChildren(driveraccUpdate);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("driverhomeAct", "onCancelled: " + "accpet wrong");
+            }
+        });
+
+
         alert.dismiss();
     }
 }

@@ -117,7 +117,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                     //set the image
                     image.setImageDrawable(drawable);
 
-                    driverDetails = account.getName() + "\nStatus: " +
+                    driverDetails = account.getName() + "\n# taken order(s): " +
                             account.getIdle() + "\nPhone Number: " + account.getNumber();
                     text.setText(driverDetails);
                 }

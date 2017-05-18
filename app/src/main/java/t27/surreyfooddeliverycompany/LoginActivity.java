@@ -30,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import objectstodb.Account;
 
 public class LoginActivity extends AppCompatActivity {
@@ -134,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         accountQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Account account = dataSnapshot.getValue(Account.class);
+                 Account account = dataSnapshot.getValue(Account.class);
                 userPreferences = getApplicationContext().getSharedPreferences(
                         getString(R.string.user_preference), Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = userPreferences.edit();
@@ -165,13 +168,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setDriverStatus(final String loginType) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         final String accountUID = user.getUid();
 
         database.child(loginType).child(accountUID).child("status").setValue("online");
-        database.child(loginType).child(accountUID).child("idle").setValue("idle");
         database.child(loginType).child(accountUID).child("nofToken").setValue(FirebaseInstanceId.getInstance().getToken());
+
     }
 
     private void loginRedirect() {
