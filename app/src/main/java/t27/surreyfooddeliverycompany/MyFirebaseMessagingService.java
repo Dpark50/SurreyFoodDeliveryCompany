@@ -41,8 +41,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             if(type!=null&&type.equals("driver")) {
                 if(payload.get("message")!=null&&payload.get("message").equals("taken")) {
-                    mBuilder.setContentTitle("You account is logged by others.");
-                    mBuilder.setContentText("NO notification. Login again to get notifications.");
+                    mBuilder.setContentTitle("Your account was detected in another device.");
+                    mBuilder.setContentText("Login again to get notifications.");
                 } else {
                     mBuilder.setContentTitle("New Order Assigned.   Payment method: " + payload.get("paym"));
                     mBuilder.setContentText("To: " + payload.get("address"));

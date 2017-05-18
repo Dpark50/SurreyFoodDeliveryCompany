@@ -157,7 +157,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
                             accountUID = user.getUid();
                             status = "offline";
-                            idle = "idle";
+                            idle = "0";
                             Log.d(TAG, "onComplete: uid=" + status);
 
                             if(user != null) {
