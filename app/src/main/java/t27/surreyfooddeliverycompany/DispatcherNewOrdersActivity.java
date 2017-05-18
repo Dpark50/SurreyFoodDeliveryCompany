@@ -71,7 +71,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private NewOrderAdapter new_ordersAdapter;
     private InProgressAdapter inprogress_orderAdapter;
 
-    boolean initialOrdersLoad;
+    private boolean initialOrdersLoad;
 
     private FirebaseListAdapter<Account> driversAdapter;
 
@@ -628,6 +628,12 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
     }
 
     public void confirm(View view) {
+        //check network first
+        if(!CheckConnection.isOnline(DispatcherNewOrdersActivity.this)) {
+            Toast.makeText(DispatcherNewOrdersActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         mDatabaseRef.child("order").child(order.getOrderUid()).child("state").setValue("confirmed");
         alert.dismiss();
     }
