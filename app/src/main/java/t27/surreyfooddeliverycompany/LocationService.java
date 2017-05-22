@@ -17,9 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LocationService extends Service {
     //60000ms
-    private static final long minTime = 60000;
+    private static final long minTime = 2000;
 
-    private static final float minDistance = 50;
+    private static final float minDistance = 2;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -67,7 +67,6 @@ public class LocationService extends Service {
         // TODO Auto-generated method stub
         super.onDestroy();
         locationManager.removeUpdates(locationListener);
-        locationManager = null;
 
     }
 
@@ -83,6 +82,8 @@ public class LocationService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
+
+            Log.d(TAG, "onLocationChanged: ");
             // get data and post to the server
             if(null != location)
             {

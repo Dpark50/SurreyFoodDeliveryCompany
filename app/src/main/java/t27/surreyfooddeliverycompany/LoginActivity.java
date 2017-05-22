@@ -100,16 +100,6 @@ public class LoginActivity extends AppCompatActivity {
                             signInEmployee(loginType);
 
 
-                            //refresh the notifi token
-                            String tok = FirebaseInstanceId
-                                    .getInstance().getToken();
-                            if(loginType.equals("dispatcher")) {
-                                if(tok!=null)
-                                    mDatabase.child("dispatch_token").child(tok).setValue(true);
-                            } else if (loginType.equals("driver")) {
-                                setDriverStatus(loginType);
-                            }
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LoginAct", "signInWithEmail:failure", task.getException());
@@ -157,7 +147,18 @@ public class LoginActivity extends AppCompatActivity {
                 prefsEditor.putString("curEmail",cur_email);
                 prefsEditor.apply();
 
-                if (account.getAccountType()!=null&&account.getAccountType().compareTo(loginType) == 0) {
+                if (account != null&&account.getAccountType()!=null&&account.getAccountType().compareTo(loginType) == 0) {
+
+                    //refresh the notifi token
+                    String tok = FirebaseInstanceId
+                            .getInstance().getToken();
+                    if(loginType.equals("dispatcher")) {
+                        if(tok!=null)
+                            mDatabase.child("dispatch_token").child(tok).setValue(true);
+                    } else if (loginType.equals("driver")) {
+                        setDriverStatus(loginType);
+                    }
+
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent
                             .FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -169,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(LoginActivity.this, "Invalid username or password",
+                Toast.makeText(LoginActivity.this, databaseError.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });

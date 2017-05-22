@@ -107,6 +107,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                 //letter image
                 ImageView image = (ImageView) view.findViewById(R.id.image_view);
                 String driverDetails;
+
                 if (account.getStatus().compareTo("online") == 0) {
 
                     ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
