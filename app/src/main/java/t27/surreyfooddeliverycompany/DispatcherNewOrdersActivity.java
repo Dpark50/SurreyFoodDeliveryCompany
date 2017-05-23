@@ -49,6 +49,8 @@ import LocalOrders.newAndInProgressFun;
 import objectstodb.Account;
 import objectstodb.Order;
 
+import static LocalOrders.PlaceNewOrder.rest_new;
+
 public class DispatcherNewOrdersActivity extends AppCompatActivity {
     private Intent intent;
     private TabHost tabHost;
@@ -398,7 +400,7 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
 
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.new_order_dialog, null);
+        final View dialogView = inflater.inflate(R.layout.new_order_dialog, null);
         builderSingle.setView(dialogView);
         TextView tvTitle = (TextView) dialogView.findViewById(R.id.first_popup_tv);
         String title_for_popup = "Create new order:";
@@ -423,7 +425,8 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                 }
 
                 //TODO - implement new order dialog here
-                Toast.makeText(DispatcherNewOrdersActivity.this, "New order added. (not working yet)", Toast.LENGTH_SHORT).show();
+                rest_new(dialogView,getBaseContext());
+                //Toast.makeText(getBaseContext(), "New order added. (not working yet)", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -547,19 +550,17 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                     String status;
                     String type;
                     if (selectedOrder != null) {
-                        type  = "Order Type: <font color=\"red\">"+selectedOrder.getOrderType() +
-                                "</font>";
-                        description= "Order Detail: <font color=\"red\">" +
-                                selectedOrder.getOrder_detail() + "</font>";
-                        status = "Status: <font color=\"red\">" + selectedOrder.getState() +
-                                "</font>";
+                        type  = "Order Type: <font color=\"red\">"+selectedOrder.getOrderType();
+                        description= selectedOrder.orderDetail_dispatcher_display();
+                        status = "Status: <font color=\"red\">" + selectedOrder.getState() + "</font><br>" +
+                                selectedOrder.getTimeStamp();
                         tvType.setText(Html.fromHtml(type), TextView.BufferType.SPANNABLE);
-                        tvDetail.setText(Html.fromHtml(description), TextView.BufferType.SPANNABLE);
+                        tvDetail.setText(description);
                         tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);
                     }
                     //----------end------------------setting order info
 
-                    builderInner.setPositiveButton("Confirmed", new DialogInterface.OnClickListener() {
+                    builderInner.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
 

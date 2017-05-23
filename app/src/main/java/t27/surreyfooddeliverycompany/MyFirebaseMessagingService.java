@@ -55,7 +55,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                mBuilder.setSmallIcon(R.mipmap.launcher_icon);
 
                         mBuilder.setAutoCancel(true)
                         .setSound(defaultSoundUri)
@@ -64,11 +64,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 //dispatcher
 
                 if(payload.get("orderstate")!=null&&payload.get("orderstate").equals("p")) {
-                    mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                    mBuilder.setSmallIcon(R.mipmap.launcher_icon);
                     mBuilder.setContentTitle("New order.   Type:" + payload.get("orderType"));
                     mBuilder.setContentText("Order detail: "+ payload.get("content"));
                 } else if(payload.get("orderstate")!=null&&payload.get("orderstate").equals("f")) {
-                    mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+                    mBuilder.setSmallIcon(R.mipmap.launcher_icon);
                     mBuilder.setContentTitle("Order is delivered.");
                     mBuilder.setContentText("Order detail: "+ payload.get("content"));
                 } else {

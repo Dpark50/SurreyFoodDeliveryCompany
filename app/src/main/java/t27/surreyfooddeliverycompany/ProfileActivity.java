@@ -40,15 +40,18 @@ public class ProfileActivity extends AppCompatActivity {
         String json = userPreference.getString("userObject", null);
         if (json != null) {
             Account account = gson.fromJson(json, Account.class);
-            String accountName = account.getName();
-            String accountAddress = account.getAddress();
-            String accountEmail = account.getEmail();
-            String accountPhone = account.getNumber();
+            if(account!=null) {
+                String accountName = account.getName();
+                String accountAddress = account.getAddress();
+                String accountEmail = account.getEmail();
+                String accountPhone = account.getNumber();
 
-            name.setText(accountName);
-            address.setText(accountAddress);
-            email.setText(accountEmail);
-            phoneNumber.setText(accountPhone);
+                name.setText(accountName);
+                address.setText(accountAddress);
+                email.setText(accountEmail);
+                phoneNumber.setText(accountPhone);
+            }
+
         }
     }
 

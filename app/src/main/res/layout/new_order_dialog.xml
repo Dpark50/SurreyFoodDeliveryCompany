@@ -413,7 +413,7 @@
 
 
             <!--submit button-->
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -428,7 +428,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="restaurant_order_click"
                     android:text=" Request Driver " />
-            </LinearLayout>
+            </LinearLayout>-->
             <!--end submit button-->
 
         </LinearLayout>

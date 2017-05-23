@@ -12,6 +12,19 @@ public class InputValidation {
                 .matcher(email).matches();
     }
 
+    public static Boolean isValidName(String name) {
+        if (name.length() > 0)
+            return true;
+        return false;
+    }
+
+    public static Boolean isValidAddress(String address) {
+        if (address.length() > 0)
+            return true;
+        return false;
+    }
+
+
     public static Boolean isSamePassword(String password1, String password2) {
         if (password1.compareTo(password2) == 0)
             return true;

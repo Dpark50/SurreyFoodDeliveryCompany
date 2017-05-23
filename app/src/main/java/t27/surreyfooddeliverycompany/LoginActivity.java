@@ -35,7 +35,7 @@ import java.util.Map;
 
 import objectstodb.Account;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private Intent intent;
@@ -91,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        showProgressDialog();
+
         mAuth.signInWithEmailAndPassword(id, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -121,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
+                        hideProgressDialog();
                     }
                 });
     }

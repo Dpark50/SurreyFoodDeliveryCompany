@@ -261,6 +261,31 @@ public class Order {
         this.timestampCreated = timestampCreated;
     }
 
+    public String orderDetail_dispatcher_display() {
+        if (orderType.compareTo("customer") == 0 || orderType.compareTo("Customer") == 0) {
+            // Restaurant's order
+            return
+                    "Customer: " + drop_cust_name +
+                    "\nCustomer's phone number: " + drop_phone +
+                    "\nCustomer's address: " + drop_address +
+                    "\nOrder details: " + order_detail +
+                    "\nTotal amount: " + cust_total +
+                    "\nPayment method: " + payment_method;
+        }
+
+        // Customer's order
+        return "Restaurant: " + rest_name +
+                "\nRestaurant's phone number: " + rest_phone +
+                "\nRestaurant's address: " + rest_address +
+                "\nReady in: " + rest_ready_min + " min" +
+                "\nTotal amount: " + cust_total +
+                "\nCustomer: " + drop_cust_name +
+                "\nCustomer's phone number: " + drop_phone +
+                "\nCustomer's address: " + drop_address +
+                "\nOrder details: " + order_detail +
+                "\nPayment method: " + payment_method;
+    }
+
     public String orderDetail() {
         if (orderType.compareTo("customer") == 0 || orderType.compareTo("Customer") == 0) {
             // Restaurant's order
@@ -297,7 +322,7 @@ public class Order {
             return ((Double) o).longValue();
         return (long)(o);
     }
-
+    @Exclude
     public String getTimeStamp() {
         Date date = new Date(getDateCreatedLong());
         SimpleDateFormat format = new SimpleDateFormat("EEE MMM d, hh:mm aaa");

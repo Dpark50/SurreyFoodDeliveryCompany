@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import LocalOrders.CheckConnection;
 import objectstodb.Order;
 
 import static t27.surreyfooddeliverycompany.R.id.uid;
@@ -157,6 +159,10 @@ public class DriverHomeActivity extends AppCompatActivity {
     }
 
     public void accept(View view) {
+        if(!CheckConnection.isOnline(DriverHomeActivity.this)) {
+            Toast.makeText(DriverHomeActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
+            return;
+        }
         DatabaseReference ref = mDatabaseRef.child("driver").child(accountUID).child("idle");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -190,6 +196,11 @@ public class DriverHomeActivity extends AppCompatActivity {
     }
 
     public void complete(View view) {
+
+        if(!CheckConnection.isOnline(DriverHomeActivity.this)) {
+            Toast.makeText(DriverHomeActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
+            return;
+        }
         DatabaseReference ref = mDatabaseRef.child("driver").child(accountUID).child("idle");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

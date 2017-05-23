@@ -53,12 +53,12 @@ public class InProgressAdapter extends ArrayAdapter<Order> {
         String status;
         String type;
         if (order != null) {
-            type  = "Order Type: <font color=\"red\">"+order.getOrderType() + "</font>";
-            description= "Order Detail: <font color=\"red\">"+order.getOrder_detail() + "</font>";
+            type  = "Order Type: <font color=\"red\">"+order.getOrderType();
+            description= order.orderDetail_dispatcher_display();
             status = "Status: <font color=\"red\">" + order.getState() + "</font><br>" +
                     order.getTimeStamp();
             tvType.setText(Html.fromHtml(type), TextView.BufferType.SPANNABLE);
-            tvDetail.setText(Html.fromHtml(description), TextView.BufferType.SPANNABLE);
+            tvDetail.setText(description);
             tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);
         }
 

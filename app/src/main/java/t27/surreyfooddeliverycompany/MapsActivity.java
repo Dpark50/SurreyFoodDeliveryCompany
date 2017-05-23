@@ -34,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private  DatabaseReference databaseReference;
     private Query locationRef;
     private String TAG = "MapsActivity";
+    private ChildEventListener childListener;
 
 
     @Override
@@ -78,7 +79,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 isInitmarker = false;
-                locationRef.addChildEventListener(new ChildEventListener() {
+                childListener =  locationRef.addChildEventListener(new ChildEventListener() {
+                    
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
@@ -155,5 +157,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        locationRef.removeEventListener(childListener);
+        Log.d(TAG, "onDestroy: remove");
+        super.onDestroy();
     }
 }
