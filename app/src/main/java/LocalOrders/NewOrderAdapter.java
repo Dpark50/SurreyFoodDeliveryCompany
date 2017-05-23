@@ -22,6 +22,7 @@ public class NewOrderAdapter extends ArrayAdapter<Order> {
     private int layoutid1;
     private int layoutid2;
     private int layoutid3;
+
     public NewOrderAdapter(Context context, ArrayList<Order> orders,
                         int listlayoutxml,
                         int layoutid1,
@@ -34,8 +35,6 @@ public class NewOrderAdapter extends ArrayAdapter<Order> {
         this.layoutid2 = layoutid2;
         this.layoutid3 = layoutid3;
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -63,7 +62,6 @@ public class NewOrderAdapter extends ArrayAdapter<Order> {
             tvDetail.setText(description);
             tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);
         }
-
 
         // Return the completed view to render on screen
         return convertView;

@@ -21,8 +21,6 @@ import java.util.HashMap;
 *
 * */
 public class Order {
-
-
     //necessary
     private String orderUid;
     private String notification_user_token;
@@ -34,10 +32,8 @@ public class Order {
     private String order_detail;
     private String payment_method;
     private String state;
-
     private String email_Account;
     private String guest_notiToken;
-
 
     //customer additional
     private String dropoff_address_detail;
@@ -65,7 +61,6 @@ public class Order {
             return this.orderUid.equals(one.orderUid);
         }
         return false;
-
     }
 
     public Order(    String orderUid,
@@ -107,7 +102,6 @@ public class Order {
     public void setEmail_Account(String email_Account) {
         this.email_Account = email_Account;
     }
-
 
     public String getOrderUid() {
         return orderUid;
@@ -326,6 +320,7 @@ public class Order {
             return ((Double) o).longValue();
         return (long)(o);
     }
+
     @Exclude
     public String getTimeStamp() {
         Date date = new Date(getDateCreatedLong());

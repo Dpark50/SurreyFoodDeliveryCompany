@@ -9,39 +9,25 @@ import java.util.HashMap;
  */
 
 public class Account {
-
-
     //for drivers
     private String status;
     private String idle;
     private String nofToken;
-
     public Double getLat() {
         return lat;
     }
-
     public void setLat(double lat) {
         this.lat = lat;
     }
-
     public Double getLng() {
         return lng;
     }
-
     public void setLng(double lng) {
         this.lng = lng;
     }
-
     private double lat;
     private double lng;
-
-
-
     private String accountUID;
-    //
-
-
-
     private String accountType;
     private String email;
     private String password;
@@ -156,6 +142,4 @@ public class Account {
     public void setAccountUID(String accountUID) {
         this.accountUID = accountUID;
     }
-
-
 }

@@ -38,8 +38,6 @@
                 <include layout="@layout/in_progress_dispatcher_page"/>
                 <include layout="@layout/driver_list_dispatcher_page"/>
                 <include layout="@layout/profile_dispatcher_page"/>
-
-
             </FrameLayout>
         </RelativeLayout>
     </TabHost>

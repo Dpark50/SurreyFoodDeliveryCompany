@@ -27,7 +27,6 @@ public class AdminHomeActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private DatabaseReference removeItemReference;
     private FirebaseListAdapter<Account> adapter;
-
     private ListView listview;
     private static final int NUM_ITEMS = 10;
 
@@ -79,30 +78,6 @@ public class AdminHomeActivity extends AppCompatActivity {
             tab.setText("Staff");
             query = mDatabaseRef.child("users").orderByChild("timestampCreated")
                     .limitToLast(NUM_ITEMS);
-
-            //query the recent added accounts
-            //Query recentAccounts_query = mDatabaseRef.child("users").orderByChild("timestampCreated")
-               //     .limitToLast(NUM_ITEMS);
-
-            //list adapter for added accounts
-            /*adapter = new FirebaseListAdapter<Account>(this,
-                    Account.class,R.layout.admin_account_item_layout,recentAccounts_query) {
-                @Override
-                protected void populateView(View view, Account account, int i) {
-                    TextView text1=(TextView)view.findViewById(R.id.email);
-                    TextView text2=(TextView)view.findViewById(R.id.name);
-                    TextView text3=(TextView)view.findViewById(R.id.type);
-                    TextView text4=(TextView)view.findViewById(R.id.phone);
-                    String email_text = "Email: " + account.getEmail();
-                    String name_text = "Name: " + account.getName();
-                    String accountType_text = "Type: " + account.getAccountType();
-                    String phone_text = "Phone: " + account.getNumber();
-                    text1.setText(email_text);
-                    text2.setText(name_text);
-                    text3.setText(accountType_text);
-                    text4.setText(phone_text);
-                }
-            };*/
         }
         adapter = new FirebaseListAdapter<Account>(this,
                 Account.class,R.layout.admin_account_item_layout, query) {
@@ -122,6 +97,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                 text4.setText(phone_text);
             }
         };
+
         listview.setAdapter(adapter);
     }
 

@@ -22,6 +22,7 @@ public class InProgressAdapter extends ArrayAdapter<Order> {
     private int layoutid1;
     private int layoutid2;
     private int layoutid3;
+
     public InProgressAdapter(Context context, ArrayList<Order> orders,
                            int listlayoutxml,
                            int layoutid1,
@@ -39,6 +40,7 @@ public class InProgressAdapter extends ArrayAdapter<Order> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Order order = getItem(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(listlayoutxml, parent, false);
@@ -61,7 +63,6 @@ public class InProgressAdapter extends ArrayAdapter<Order> {
             tvDetail.setText(description);
             tvStatus.setText(Html.fromHtml(status), TextView.BufferType.SPANNABLE);
         }
-
 
         // Return the completed view to render on screen
         return convertView;

@@ -25,8 +25,6 @@ import objectstodb.Account;
 public class AdminAddAccountActivity extends AppCompatActivity {
     private static final String TAG = "AdminAddAccountActivity" ;
     private Intent intent;
-
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabaseRef;
@@ -52,12 +50,7 @@ public class AdminAddAccountActivity extends AppCompatActivity {
     private String address;
     private String accountType;
     private String tableName;
-
     private Account addedAccount;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +68,9 @@ public class AdminAddAccountActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         intent = new Intent(this, AdminHomeActivity.class);
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     public void submitAddAccount(View view) {
-
         accountType_RadioButton = (RadioButton) findViewById(type_RadioGroup.getCheckedRadioButtonId());
         accountType = accountType_RadioButton.getText().toString();
         tableName = accountType;
@@ -170,12 +161,15 @@ public class AdminAddAccountActivity extends AppCompatActivity {
                                         phone,
                                         address,
                                         accountUID);
-                                addedAccount.setNofToken(FirebaseInstanceId.getInstance().getToken());
+                                addedAccount.setNofToken(FirebaseInstanceId.getInstance()
+                                        .getToken());
 
                                 //add one employee to different db table
-                                mDatabaseRef.child(tableName).child(accountUID).setValue(addedAccount);
+                                mDatabaseRef.child(tableName).child(accountUID)
+                                        .setValue(addedAccount);
 
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent
+                                        .FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             }
                         }

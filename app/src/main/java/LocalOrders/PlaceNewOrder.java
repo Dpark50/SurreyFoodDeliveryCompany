@@ -1,11 +1,6 @@
 package LocalOrders;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.annotation.VisibleForTesting;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -127,7 +122,6 @@ public class PlaceNewOrder {
             return;
         }
 
-
         //send driver request
         requestDriver(restaurant_name,
                 restaurant_phone,
@@ -181,8 +175,6 @@ public class PlaceNewOrder {
 
         final Order newOrderSaved = newOrder;
 
-
-
         orderRef.setValue(newOrder, new DatabaseReference.CompletionListener() {
 
             @Override
@@ -204,8 +196,6 @@ public class PlaceNewOrder {
                 }
             }
         });
-
-
     }
 
     public static void cust_new(View dialogView, Context context) {
@@ -275,8 +265,6 @@ public class PlaceNewOrder {
                 order_detail,
                 preferred_payment_method,
                 context);
-
-
     }
 
     //TODO send order info to dispatcher/db
@@ -289,7 +277,6 @@ public class PlaceNewOrder {
                                    String order_detail,
                                    String preferred_payment_method,
                                    final Context context){
-
 
         //-------------order initialization-------------------------------------------------
 
@@ -314,9 +301,6 @@ public class PlaceNewOrder {
    /*     //email for saving order into sharedPreference
         final String finalLoginEmail = (loginEmail==null)?"guest":loginEmail;*/
 
-
-
-
         orderRef.setValue(newOrder, new DatabaseReference.CompletionListener() {
 
             @Override
@@ -331,17 +315,7 @@ public class PlaceNewOrder {
                     //if validations passed, display a success toast
                     Toast.makeText(context, "Order successfully placed.",
                             Toast.LENGTH_SHORT).show();
-
-
-
-
-
-
-
                 }
-
-
-
             }
         });
 
@@ -353,9 +327,5 @@ public class PlaceNewOrder {
         String order_detail,
         String payment_method,
         String state*/
-
-
-
     }
-
 }

@@ -84,10 +84,6 @@ public class DriverHomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Order oneorder = (Order) parent.getItemAtPosition(position);
-                TextView textviewStatus = (TextView) view.findViewById(R.id.order_status);
-                TextView textviewUid = (TextView) view.findViewById(uid);
-                String status = textviewStatus.getText().toString();
-                String uid = textviewUid.getText().toString();
 
                 // Parse textview string to order state
                 orderStatus = oneorder.getState();
@@ -110,7 +106,6 @@ public class DriverHomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @Override
@@ -122,7 +117,6 @@ public class DriverHomeActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     private void displayDialog() {
@@ -163,6 +157,7 @@ public class DriverHomeActivity extends AppCompatActivity {
             Toast.makeText(DriverHomeActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
             return;
         }
+
         DatabaseReference ref = mDatabaseRef.child("driver").child(accountUID).child("idle");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -176,7 +171,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                 //decrease taken order
                 String path1 = "driver/" + accountUID+"/idle";
                 driveraccUpdate.put(path1, numBack);
-
 
                 String path2 = "order/"+ orderUid+"/state";
 
@@ -192,16 +186,18 @@ public class DriverHomeActivity extends AppCompatActivity {
                 Log.d("driverhomeAct", "onCancelled: " + "accpet wrong");
             }
         });
+
         alert.dismiss();
     }
 
     public void complete(View view) {
-
         if(!CheckConnection.isOnline(DriverHomeActivity.this)) {
             Toast.makeText(DriverHomeActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
             return;
         }
+
         DatabaseReference ref = mDatabaseRef.child("driver").child(accountUID).child("idle");
+
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -227,7 +223,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                 Log.d("driverhomeAct", "onCancelled: " + "accpet wrong");
             }
         });
-
 
         alert.dismiss();
     }

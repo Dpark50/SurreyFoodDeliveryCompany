@@ -1,17 +1,13 @@
 package t27.surreyfooddeliverycompany;
 
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.IBinder;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.google.gson.Gson;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
@@ -54,10 +50,5 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             reference.child("dispatch_token").setValue(refreshToken);
         }
-
-
-
     }
-
-
 }

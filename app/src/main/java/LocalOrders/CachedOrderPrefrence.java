@@ -2,17 +2,11 @@ package LocalOrders;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import objectstodb.Order;
 
@@ -49,9 +43,6 @@ public class CachedOrderPrefrence {
         }
 
         orders_al.putAll(newones);
-
-
-
         SharedPreferences.Editor prefsEditor = sp.edit();
         String newjson = gson.toJson(orders_al);
         prefsEditor.putString("orders", newjson);
@@ -78,9 +69,6 @@ public class CachedOrderPrefrence {
         }
 
         orders_al.put(newone.getOrderUid(),newone);
-
-
-
         SharedPreferences.Editor prefsEditor = sp.edit();
         String newjson = gson.toJson(orders_al);
         prefsEditor.putString("orders", newjson);
@@ -120,6 +108,7 @@ public class CachedOrderPrefrence {
 
         orders_al = gson.fromJson(orders_js, new TypeToken<HashMap<String,Order>>() {
         }.getType());
+
         if(orders_al.containsKey(removeone.getOrderUid())) {
             orders_al.remove(removeone.getOrderUid());
             //put the object back
@@ -129,45 +118,14 @@ public class CachedOrderPrefrence {
             prefsEditor.apply();
             return true;
         }
-        return false;
 
+        return false;
     }
 
     public static String getOrdersJs(Context ApplicationContext,String email) {
         SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext,email);
         return sp.getString("orders",null);
     }
-
-    /*    public static boolean updateOrderByEmail(Context ApplicationContext,String email,Order newone) {
-        ArrayList<Order> orders_al;
-
-        SharedPreferences sp = getLocalRecordPreByEmail(ApplicationContext, email);
-        String orders_js = sp.getString("orders", null);
-        Gson gson = new Gson();
-
-        //nothing in the email
-        if (orders_js != null) {
-            //try to update
-            orders_al = gson.fromJson(orders_js, new TypeToken<ArrayList<Order>>() {
-            }.getType());
-            Log.d("upd", "updateOrderByEmail: hello" + newone.toString());
-            if(orders_al.contains(newone)) {
-                Collections.replaceAll(orders_al, newone, newone);
-                SharedPreferences.Editor prefsEditor = sp.edit();
-                String newjson = gson.toJson(orders_al);
-                prefsEditor.putString("orders", newjson);
-                prefsEditor.apply();
-                Log.d("upd", "updateOrderByEmail: world" +newjson);
-                return true;
-
-            }
-        }
-        return false;
-
-
-
-    }*/
-
 }
 
 
