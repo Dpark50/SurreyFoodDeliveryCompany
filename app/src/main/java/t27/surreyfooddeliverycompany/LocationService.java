@@ -32,12 +32,8 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         System.out.println("Create service");
-
         super.onCreate();
     }
-
-
-
 
     //start service
     @Override
@@ -67,7 +63,6 @@ public class LocationService extends Service {
         // TODO Auto-generated method stub
         super.onDestroy();
         locationManager.removeUpdates(locationListener);
-
     }
 
     @Override
@@ -77,33 +72,25 @@ public class LocationService extends Service {
     }
 
     public class GpsLocationListener implements LocationListener {
-
-
-
         @Override
         public void onLocationChanged(Location location) {
 
             Log.d(TAG, "onLocationChanged: ");
             // get data and post to the server
-            if(null != location)
-            {
+            if(null != location) {
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
                 ref.child("driver").child(uid).child("lat").setValue(location.getLatitude());
                 ref.child("driver").child(uid).child("lng").setValue(location.getLongitude());
 
-
                 Log.d(TAG, "onLocationChanged:Latitude:" + location.getLatitude());
                 Log.d(TAG, "onLocationChanged Longitude:"+ location.getLongitude());
-
-
             }
 
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
         }
 
         @Override
@@ -117,8 +104,5 @@ public class LocationService extends Service {
             // TODO Auto-generated method stub
 
         }
-
-
-
     }
 }

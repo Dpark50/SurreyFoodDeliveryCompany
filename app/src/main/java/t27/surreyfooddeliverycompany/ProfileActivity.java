@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import objectstodb.Account;
@@ -70,13 +69,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(type.equals("driver")) {
             database.child("driver").child(accountUID).child("status").setValue("offline");
-        } /*else if(type.equals("dispatcher")) {
-            //the notifi token
-            String tok = FirebaseInstanceId
-                    .getInstance().getToken();
-            database.child("dispatch_token").child(tok).removeValue();
-            Log.d("profileAct", "signOut: token:" + tok);
-        }*/
+        }
+
         SharedPreferences.Editor editor = preferences.edit();
 
         mAuth.signOut();

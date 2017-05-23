@@ -29,14 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import LocalOrders.CheckConnection;
@@ -60,8 +54,6 @@ public class DriverHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_driver_home);
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.order_layout);
         listview = (ListView) findViewById(R.id.order_list);
@@ -90,8 +82,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                             order.getTimeStamp());
                 }
             }
-
-
         };
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,7 +109,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                         );
             }
 
-
             return;
         }else {
             Intent intent = new Intent(getApplicationContext(),LocationService.class);
@@ -127,9 +116,6 @@ public class DriverHomeActivity extends AppCompatActivity {
             startService(intent);
             requset = true;
         }
-
-
-
     }
 
     @Override
@@ -138,7 +124,6 @@ public class DriverHomeActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     // permission was granted, yay! do the
                     // task you need to do.
                     //location
@@ -146,7 +131,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                     intent.putExtra("uid",accountUID);
                     startService(intent);
                     requset = true;
-
                 } else {
                     requset = false;
                     // permission denied, boo! Disable the
@@ -154,9 +138,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                 }
                 return;
             }
-
-            // other 'switch' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -236,7 +217,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                 driveraccUpdate.put(path2,"delivering");
 
                 mDatabaseRef.updateChildren(driveraccUpdate);
-
             }
 
             @Override
@@ -273,7 +253,6 @@ public class DriverHomeActivity extends AppCompatActivity {
                 driveraccUpdate.put("order/" + orderUid+"/driverUID",accountUID + "_finished");
 
                 mDatabaseRef.updateChildren(driveraccUpdate);
-
             }
 
             @Override

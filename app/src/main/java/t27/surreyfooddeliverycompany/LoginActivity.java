@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -30,9 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import objectstodb.Account;
 
 public class LoginActivity extends BaseActivity {
@@ -50,9 +46,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginRedirect();
@@ -100,8 +93,6 @@ public class LoginActivity extends BaseActivity {
                         // Sign in success, update UI with the signed-in user's information
                         if (task.isSuccessful()) {
                             signInEmployee(loginType);
-
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LoginAct", "signInWithEmail:failure", task.getException());
@@ -150,8 +141,8 @@ public class LoginActivity extends BaseActivity {
                 prefsEditor.putString("curEmail",cur_email);
                 prefsEditor.apply();
 
-                if (account != null&&account.getAccountType()!=null&&account.getAccountType().compareTo(loginType) == 0) {
-
+                if (account != null&&account.getAccountType()!=null&&account.getAccountType()
+                        .compareTo(loginType) == 0) {
                     //refresh the notifi token
                     String tok = FirebaseInstanceId
                             .getInstance().getToken();
@@ -185,8 +176,8 @@ public class LoginActivity extends BaseActivity {
         final String accountUID = user.getUid();
 
         database.child(loginType).child(accountUID).child("status").setValue("online");
-        database.child(loginType).child(accountUID).child("nofToken").setValue(FirebaseInstanceId.getInstance().getToken());
-
+        database.child(loginType).child(accountUID).child("nofToken")
+                .setValue(FirebaseInstanceId.getInstance().getToken());
     }
 
     private void loginRedirect() {
