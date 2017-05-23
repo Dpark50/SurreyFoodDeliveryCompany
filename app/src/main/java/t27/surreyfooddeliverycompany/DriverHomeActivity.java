@@ -1,9 +1,12 @@
 package t27.surreyfooddeliverycompany;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -26,8 +29,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import LocalOrders.CheckConnection;
@@ -44,10 +53,15 @@ public class DriverHomeActivity extends AppCompatActivity {
     private Button complete;
     private String orderStatus;
     private String orderUid;
+    private boolean requset = false;
+
+    public final int REQUEST_CODE= 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_driver_home);
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.order_layout);
         listview = (ListView) findViewById(R.id.order_list);
@@ -101,10 +115,53 @@ public class DriverHomeActivity extends AppCompatActivity {
 
         listview.setAdapter(adapter);
 
-        //location
-        Intent intent = new Intent(getApplicationContext(),LocationService.class);
-        intent.putExtra("uid",accountUID);
-        startService(intent);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_CODE
+                        );
+            }
+
+
+            return;
+        }else {
+            Intent intent = new Intent(getApplicationContext(),LocationService.class);
+            intent.putExtra("uid",accountUID);
+            startService(intent);
+            requset = true;
+        }
+
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! do the
+                    // task you need to do.
+                    //location
+                    Intent intent = new Intent(getApplicationContext(),LocationService.class);
+                    intent.putExtra("uid",accountUID);
+                    startService(intent);
+                    requset = true;
+
+                } else {
+                    requset = false;
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'switch' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override
@@ -116,7 +173,8 @@ public class DriverHomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(getApplicationContext(),LocationService.class));
+        if(requset)
+            stopService(new Intent(getApplicationContext(),LocationService.class));
     }
 
     @Override
