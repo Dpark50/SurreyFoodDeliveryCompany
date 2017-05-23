@@ -268,6 +268,7 @@ public class Order {
                     "Customer: " + drop_cust_name +
                     "\nCustomer's phone number: " + drop_phone +
                     "\nCustomer's address: " + drop_address +
+                            "\naddress detail: " + dropoff_address_detail +
                     "\nOrder details: " + order_detail +
                     "\nTotal amount: " + cust_total +
                     "\nPayment method: " + payment_method;
@@ -282,6 +283,7 @@ public class Order {
                 "\nCustomer: " + drop_cust_name +
                 "\nCustomer's phone number: " + drop_phone +
                 "\nCustomer's address: " + drop_address +
+                "\naddress detail: " + dropoff_address_detail +
                 "\nOrder details: " + order_detail +
                 "\nPayment method: " + payment_method;
     }
@@ -293,6 +295,7 @@ public class Order {
                     "\nCustomer: " + drop_cust_name +
                     "\nCustomer's phone number: " + drop_phone +
                     "\nCustomer's address: " + drop_address +
+                    "\naddress detail: " + dropoff_address_detail +
                     "\nOrder details: " + order_detail +
                     "\nTotal amount: " + cust_total +
                     "\nPayment method: " + payment_method;
@@ -308,6 +311,7 @@ public class Order {
                 "\nCustomer: " + drop_cust_name +
                 "\nCustomer's phone number: " + drop_phone +
                 "\nCustomer's address: " + drop_address +
+                "\naddress detail: " + dropoff_address_detail +
                 "\nOrder details: " + order_detail +
                 "\nPayment method: " + payment_method;
     }

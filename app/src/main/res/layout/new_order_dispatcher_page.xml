@@ -30,13 +30,23 @@
         android:layout_height="match_parent" />
 
     <Button
+        android:id="@+id/new_cust_order_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="New cust"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:onClick="newCustOrderButton"
+        />
+
+    <Button
         android:id="@+id/new_order_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="New"
+        android:text="New rest"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:onClick="newOrderButton"
+        android:onClick="newRestOrderButton"
         />
 
     <Button

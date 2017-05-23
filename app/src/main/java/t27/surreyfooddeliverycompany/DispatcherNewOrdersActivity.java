@@ -49,9 +49,10 @@ import LocalOrders.newAndInProgressFun;
 import objectstodb.Account;
 import objectstodb.Order;
 
+import static LocalOrders.PlaceNewOrder.cust_new;
 import static LocalOrders.PlaceNewOrder.rest_new;
 
-public class DispatcherNewOrdersActivity extends AppCompatActivity {
+public class DispatcherNewOrdersActivity extends BaseActivity {
     private Intent intent;
     private TabHost tabHost;
     private DatabaseReference mDatabaseRef;
@@ -395,8 +396,40 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void newCustOrderButton(View view) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.new_cust_order_dialog, null);
+        builderSingle.setView(dialogView);
 
-    public void newOrderButton(View view) {
+        builderSingle.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+
+                if(!CheckConnection.isOnline(DispatcherNewOrdersActivity.this)) {
+                    Toast.makeText(DispatcherNewOrdersActivity.this, "Sorry, No network", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    return;
+                }
+
+                cust_new(dialogView,getBaseContext());
+                //Toast.makeText(getBaseContext(), "New order added. (not working yet)", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        builderSingle.show();
+    }
+
+
+    public void newRestOrderButton(View view) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(DispatcherNewOrdersActivity.this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -424,7 +457,6 @@ public class DispatcherNewOrdersActivity extends AppCompatActivity {
                     return;
                 }
 
-                //TODO - implement new order dialog here
                 rest_new(dialogView,getBaseContext());
                 //Toast.makeText(getBaseContext(), "New order added. (not working yet)", Toast.LENGTH_SHORT).show();
 

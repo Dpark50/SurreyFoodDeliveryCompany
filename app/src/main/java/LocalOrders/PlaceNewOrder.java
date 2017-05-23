@@ -1,8 +1,10 @@
 package LocalOrders;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -205,4 +207,155 @@ public class PlaceNewOrder {
 
 
     }
+
+    public static void cust_new(View dialogView, Context context) {
+        //get EditTexts from xml
+        EditText name_et = (EditText)dialogView.findViewById(R.id.cust_order_name_edittext);
+        EditText  phone_et = (EditText)dialogView.findViewById(R.id.cust_order_phone_edittext);
+        EditText  email_et = (EditText)dialogView.findViewById(R.id.cust_order_email_edittext);
+        EditText address_et = (EditText)dialogView.findViewById(R.id.cust_order_address_edittext);
+        EditText address_detail_et = (EditText)dialogView.findViewById(R.id.cust_order_address_detail_edittext);
+        EditText order_detail_et = (EditText)dialogView.findViewById(R.id.cust_order_detail_edittext);
+        RadioGroup preferred_payment_method_RadioGroup = (RadioGroup) dialogView.findViewById(R.id.preferred_payment_radioGroup);
+
+        //get input strings from EditTexts
+        String name = name_et.getText().toString();
+        String phone = phone_et.getText().toString();
+        String email = email_et.getText().toString();
+        String address = address_et.getText().toString();
+        String address_detail = address_detail_et.getText().toString();
+        String order_detail = order_detail_et.getText().toString();
+        RadioButton preferred_payment_method_RadioButton = (RadioButton) dialogView.findViewById(preferred_payment_method_RadioGroup.getCheckedRadioButtonId());
+        String preferred_payment_method = preferred_payment_method_RadioButton.getText().toString();
+
+
+        //input validations
+        if (!InputValidation.isValidName(name)) {
+            name_et.setError("invalid name");
+            Toast.makeText(context, "Please enter a valid name",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!InputValidation.isValidPhoneNumber(phone)){
+            phone_et.setError("invalid phone number");
+            Toast.makeText(context, "Please enter a valid phone number",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!InputValidation.isValidAddress(address)){
+            address_et.setError("invalid address");
+            Toast.makeText(context, "Please enter a valid address",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!InputValidation.isValidOrderDetail(order_detail)){
+            order_detail_et.setError("invalid order detail");
+            Toast.makeText(context, "Please enter order details",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!CheckConnection.isOnline(context)) {
+            Toast.makeText(context, "No Network",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        //place order
+        placeOrder(null,
+                name,
+                phone,
+                email,
+                address,
+                address_detail,
+                order_detail,
+                preferred_payment_method,
+                context);
+
+
+    }
+
+    //TODO send order info to dispatcher/db
+    private static void placeOrder(String token,
+                                   String name,
+                                   String phone,
+                                   String email,
+                                   String address,
+                                   String address_detail,
+                                   String order_detail,
+                                   String preferred_payment_method,
+                                   final Context context){
+
+
+        //-------------order initialization-------------------------------------------------
+
+        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("order").push();
+        String orderUid = orderRef.getKey();
+        Order newOrder = new Order( orderUid,
+                token,
+                "customer",
+                name,
+                phone,
+                address,
+                order_detail,
+                preferred_payment_method,
+                "pending");
+
+        newOrder.setDropoff_email(email);
+        newOrder.setDropoff_address_detail(address_detail);
+
+        //-------------------------------------------------------
+        final Order newOrderSaved = newOrder;
+
+   /*     //email for saving order into sharedPreference
+        final String finalLoginEmail = (loginEmail==null)?"guest":loginEmail;*/
+
+
+
+
+        orderRef.setValue(newOrder, new DatabaseReference.CompletionListener() {
+
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Order could not be saved " + databaseError.getMessage());
+                } else {
+                    //Log.d(TAG, "onComplete: " + CachedOrderPrefrence.getOrdersJs(getApplicationContext(),
+                    //finalLoginEmail));
+                    System.out.println("Order successfully.");
+
+                    //if validations passed, display a success toast
+                    Toast.makeText(context, "Order successfully placed.",
+                            Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+                }
+
+
+
+            }
+        });
+
+        /*String notification_token,
+        String orderType,
+        String drop_cust_name,
+        String drop_phone,
+        String drop_address,
+        String order_detail,
+        String payment_method,
+        String state*/
+
+
+
+    }
+
 }
